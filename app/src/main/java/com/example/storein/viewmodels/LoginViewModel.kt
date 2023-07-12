@@ -18,8 +18,11 @@ class LoginViewModel @Inject constructor(
     private val _login = MutableSharedFlow<NetworkResult<String>>()
     val login = _login.asSharedFlow()
 
-   // fun login(email: String, password: String) {
-        //        firebaseAuth.signInWithEmailAndPassword(email, password)
+    private val _resetPassword = MutableSharedFlow<NetworkResult<String>>()
+    val resetPassword = _resetPassword.asSharedFlow()
+
+    // fun login(email: String, password: String) {
+    //        firebaseAuth.signInWithEmailAndPassword(email, password)
 //            .addOnCompleteListener { task ->
 //                if (task.isSuccessful) {
 //                    _login.tryEmit(NetworkResult.Success("Login Success"))
@@ -27,21 +30,38 @@ class LoginViewModel @Inject constructor(
 //                    _login.tryEmit(NetworkResult.Error(task.exception?.message.toString()))
 //                }
 //            }
-        fun login(email: String, password: String) {
-            viewModelScope.launch { _login.emit(NetworkResult.Loading()) }
-            firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnSuccessListener {
-                    viewModelScope.launch {
-                        it.user?.let {
-                            _login.emit(NetworkResult.Success("Login Success"))
-                        }
-                    }
-                }
-                .addOnFailureListener {
-                    viewModelScope.launch {
-                        _login.emit(NetworkResult.Error(it.message.toString()))
-                    }
-                }
-        }
     //}
+    fun login(email: String, password: String) {
+        viewModelScope.launch { _login.emit(NetworkResult.Loading()) }
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+            .addOnSuccessListener {
+                viewModelScope.launch {
+                    it.user?.let {
+                        _login.emit(NetworkResult.Success("Login Success"))
+                    }
+                }
+            }
+            .addOnFailureListener {
+                viewModelScope.launch {
+                    _login.emit(NetworkResult.Error(it.message.toString()))
+                }
+            }
+    }
+
+    fun resetPassword(email: String) {
+        viewModelScope.launch { _resetPassword.emit(NetworkResult.Loading()) }
+
+        firebaseAuth
+            .sendPasswordResetEmail(email)
+            .addOnSuccessListener {
+                viewModelScope.launch {
+                    _resetPassword.emit(NetworkResult.Success("Reset Password Success"))
+                }
+            }
+            .addOnFailureListener {
+                viewModelScope.launch {
+                    _resetPassword.emit(NetworkResult.Error(it.message.toString()))
+                }
+            }
+    }
 }

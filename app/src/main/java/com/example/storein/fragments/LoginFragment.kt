@@ -13,8 +13,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.storein.R
 import com.example.storein.activites.ShoppingActivity
 import com.example.storein.databinding.FragmentLoginBinding
+import com.example.storein.dialog.setUpBottomSheetDialog
 import com.example.storein.utils.NetworkResult
 import com.example.storein.viewmodels.LoginViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,6 +45,30 @@ class LoginFragment : Fragment() {
                 val email = binding.edEmailLogin.text.toString().trim()
                 val password = binding.edPasswordLogin.text.toString()
                 viewModel.login(email, password)
+            }
+        }
+
+        binding.tvForgotPasswordLogin.setOnClickListener {
+            setUpBottomSheetDialog { email ->
+              viewModel.resetPassword(email)
+            }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.resetPassword.collect() {
+                when (it) {
+                    is NetworkResult.Loading -> {}
+
+                    is NetworkResult.Success -> {
+                       Snackbar.make(requireView(), "Reset password link has been sent to your email", Snackbar.LENGTH_LONG).show()
+                    }
+
+                    is NetworkResult.Error -> {
+                        Snackbar.make(requireView(), "Error ${it.message}", Snackbar.LENGTH_LONG).show()
+                    }
+
+                    else -> Unit
+                }
             }
         }
 

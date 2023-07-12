@@ -32,6 +32,12 @@ class LoginViewModel @Inject constructor(
 //            }
     //}
     fun login(email: String, password: String) {
+        if(email.isEmpty() || password.isEmpty()) {
+            viewModelScope.launch {
+                _login.emit(NetworkResult.Error("Email or password cannot be empty"))
+            }
+            return
+        }
         viewModelScope.launch { _login.emit(NetworkResult.Loading()) }
         firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {

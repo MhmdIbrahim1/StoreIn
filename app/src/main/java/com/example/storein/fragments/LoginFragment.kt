@@ -44,7 +44,12 @@ class LoginFragment : Fragment() {
             buttonLoginLogin.setOnClickListener {
                 val email = binding.edEmailLogin.text.toString().trim()
                 val password = binding.edPasswordLogin.text.toString()
-                viewModel.login(email, password)
+
+                if (email.isNotEmpty() && password.isNotEmpty()) {
+                    viewModel.login(email, password)
+                } else {
+                    Snackbar.make(requireView(), "Please enter the email and password!!", Snackbar.LENGTH_LONG).show()
+                }
             }
         }
 

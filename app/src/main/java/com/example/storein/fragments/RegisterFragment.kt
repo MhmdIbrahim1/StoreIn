@@ -8,16 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.storein.R
 import com.example.storein.data.User
 import com.example.storein.databinding.FragmentResgiesterBinding
 import com.example.storein.utils.NetworkResult
+import com.example.storein.utils.RegisterValidation
 import com.example.storein.viewmodels.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 
 private const val TAG = "RegisterFragment"
+
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentResgiesterBinding
@@ -35,7 +37,7 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            buttonRegisterRegister.setOnClickListener{
+            buttonRegisterRegister.setOnClickListener {
                 val user = User(
                     edFirstNameRegister.text.toString().trim(),
                     edLastNameRegister.text.toString().trim(),
@@ -46,11 +48,12 @@ class RegisterFragment : Fragment() {
             }
         }
         lifecycleScope.launchWhenStarted {
-            viewModel.register.collect(){
-                when(it){
+            viewModel.register.collect() {
+                when (it) {
                     is NetworkResult.Loading -> {
                         binding.buttonRegisterRegister.startAnimation()
                     }
+
                     is NetworkResult.Success -> {
                         Log.d("RegisterFragment", it.data.toString())
                         binding.buttonRegisterRegister.revertAnimation()
@@ -61,11 +64,33 @@ class RegisterFragment : Fragment() {
                             edPasswordRegister.setText("")
                         }
                     }
+
                     is NetworkResult.Error -> {
                         Log.e(TAG, it.message.toString())
                         binding.buttonRegisterRegister.revertAnimation()
                     }
+
                     else -> Unit
+                }
+            }
+        }
+        lifecycleScope.launchWhenStarted {
+            viewModel.validation.collect { validation ->
+                if (validation.email is RegisterValidation.Failed) {
+                    withContext(Dispatchers.Main) {
+                        binding.edEmailRegister.apply {
+                            requestFocus()
+                            error = validation.email.message
+                        }
+                    }
+                }
+                if (validation.password is RegisterValidation.Failed) {
+                    withContext(Dispatchers.Main) {
+                        binding.edPasswordRegister.apply {
+                            requestFocus()
+                            error = validation.password.message
+                        }
+                    }
                 }
             }
         }

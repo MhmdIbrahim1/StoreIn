@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "593335904452",
+    "project_id": "storein-5d66c",
+    "storage_bucket": "storein-5d66c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:593335904452:android:cd3eca4c343ebd27774191",
+        "android_client_info": {
+          "package_name": "com.example.storein"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "593335904452-ohi3fj26ik88505k8pq5r7aokak8cu2f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEq73h4ROQjHrsZ2WyGyFSTw3qs3B-slU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "593335904452-ohi3fj26ik88505k8pq5r7aokak8cu2f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

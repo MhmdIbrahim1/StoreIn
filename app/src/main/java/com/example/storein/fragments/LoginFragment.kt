@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -15,7 +16,10 @@ import com.example.storein.activites.ShoppingActivity
 import com.example.storein.databinding.FragmentLoginBinding
 import com.example.storein.dialog.setUpBottomSheetDialog
 import com.example.storein.utils.NetworkResult
+import com.example.storein.utils.getGoogleSignInClient
 import com.example.storein.viewmodels.LoginViewModel
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.common.api.ApiException
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -102,5 +106,23 @@ class LoginFragment : Fragment() {
             }
         }
 
+        binding.googleLogin.setOnClickListener {
+            val signInClient = getGoogleSignInClient(requireContext())
+            googleSignInLauncher.launch(signInClient.signInIntent)
+        }
+
     }
+
+    private val googleSignInLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+            try {
+                val account = task.getResult(ApiException::class.java)
+                account?.let {
+                    viewModel.signInWithGoogle(it.idToken!!)
+                }
+            } catch (e: ApiException) {
+                Toast.makeText(requireContext(), "Google sign-in failed", Toast.LENGTH_LONG).show()
+            }
+        }
 }

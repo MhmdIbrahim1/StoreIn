@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.storein.utils.NetworkResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -21,16 +23,9 @@ class LoginViewModel @Inject constructor(
     private val _resetPassword = MutableSharedFlow<NetworkResult<String>>()
     val resetPassword = _resetPassword.asSharedFlow()
 
-    // fun login(email: String, password: String) {
-    //        firebaseAuth.signInWithEmailAndPassword(email, password)
-//            .addOnCompleteListener { task ->
-//                if (task.isSuccessful) {
-//                    _login.tryEmit(NetworkResult.Success("Login Success"))
-//                } else {
-//                    _login.tryEmit(NetworkResult.Error(task.exception?.message.toString()))
-//                }
-//            }
-    //}
+    private val firestore = FirebaseFirestore.getInstance()
+
+
     fun login(email: String, password: String) {
         if(email.isEmpty() || password.isEmpty()) {
             viewModelScope.launch {
@@ -70,4 +65,41 @@ class LoginViewModel @Inject constructor(
                 }
             }
     }
+
+    fun signInWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        firebaseAuth.signInWithCredential(credential)
+            .addOnSuccessListener { authResult ->
+                viewModelScope.launch {
+                    authResult.user?.let { user ->
+                        val userData = hashMapOf(
+                            "uid" to user.uid,
+                            "email" to user.email,
+                            "displayName" to user.displayName,
+                            "photoUrl" to user.photoUrl.toString()
+                        )
+
+                        firestore.collection("users")
+                            .document(user.uid)
+                            .set(userData)
+                            .addOnSuccessListener {
+                                viewModelScope.launch {
+                                    _login.emit(NetworkResult.Success("Login Success"))
+                                }
+                            }
+                            .addOnFailureListener {
+                                viewModelScope.launch {
+                                    _login.emit(NetworkResult.Error("Failed to add user data"))
+                                }
+                            }
+                    }
+                }
+            }
+            .addOnFailureListener {
+                viewModelScope.launch {
+                    _login.emit(NetworkResult.Error(it.message.toString()))
+                }
+            }
+    }
+
 }

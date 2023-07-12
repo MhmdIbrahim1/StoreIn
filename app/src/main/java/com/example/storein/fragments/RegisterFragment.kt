@@ -15,6 +15,7 @@ import com.example.storein.databinding.FragmentResgiesterBinding
 import com.example.storein.utils.NetworkResult
 import com.example.storein.utils.RegisterValidation
 import com.example.storein.viewmodels.RegisterViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -69,6 +70,13 @@ class RegisterFragment : Fragment() {
                             edEmailRegister.setText("")
                             edPasswordRegister.setText("")
                         }
+                        // Navigate to login screen
+                        Snackbar.make(
+                            requireView(),
+                            "Register success",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                        findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
                     }
 
                     is NetworkResult.Error -> {

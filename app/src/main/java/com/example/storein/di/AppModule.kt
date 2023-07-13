@@ -1,5 +1,10 @@
 package com.example.storein.di
 
+import android.app.Application
+import android.content.Context
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
+import com.example.storein.utils.Constants.INTRODUCTION_SP
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -7,6 +12,7 @@ import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -21,4 +27,10 @@ object AppModule {
     @Provides
     @Singleton
     fun provideFirebaseFireStoreDatabase() = Firebase.firestore
+
+    @Provides
+    @Singleton
+    fun provideSharedPreferences(@ApplicationContext appContext: Context): SharedPreferences {
+        return appContext.getSharedPreferences("PREFS_NAME", MODE_PRIVATE)
+    }
 }

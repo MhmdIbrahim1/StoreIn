@@ -14,6 +14,9 @@
             android:id="@+id/action_introductionFragment_to_accountOptionsFragment"
             app:destination="@id/accountOptionsFragment"
             app:enterAnim="@anim/from_bottom" />
+        <action
+            android:id="@+id/action_introductionFragment_to_homeFragment2"
+            app:destination="@id/homeFragment2" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -57,4 +60,9 @@
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
     </fragment>
+    <fragment
+        android:id="@+id/homeFragment2"
+        android:name="com.example.storein.fragments.shopping.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
 </navigation>

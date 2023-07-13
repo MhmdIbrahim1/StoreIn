@@ -1,4 +1,4 @@
-package com.example.storein.fragments
+package com.example.storein.fragments.loginAndregister.accountoption
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

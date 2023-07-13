@@ -1,4 +1,4 @@
-package com.example.storein.fragments
+package com.example.storein.fragments.loginAndregister.login
 
 import android.content.Intent
 import android.os.Bundle

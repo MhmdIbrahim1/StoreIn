@@ -6,6 +6,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import android.content.Context
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import com.google.android.gms.common.api.ApiException
 
 fun validateEmail(email: String): RegisterValidation {
     if (email.isEmpty()) {
@@ -33,5 +36,6 @@ fun validatePassword(password: String): RegisterValidation {
         .requestIdToken(context.getString(R.string.default_web_client_id))
         .build()
     return GoogleSignIn.getClient(context, gso)
+
 }
 

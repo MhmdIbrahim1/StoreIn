@@ -1,4 +1,4 @@
-package com.example.storein.fragments
+package com.example.storein.fragments.loginAndregister.register
 
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.storein.R
 import com.example.storein.data.User
 import com.example.storein.databinding.FragmentResgiesterBinding
+import com.example.storein.utils.Constants.TAG
 import com.example.storein.utils.NetworkResult
 import com.example.storein.utils.RegisterValidation
 import com.example.storein.viewmodels.RegisterViewModel
@@ -21,7 +22,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 
-private const val TAG = "RegisterFragment"
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {

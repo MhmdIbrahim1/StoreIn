@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -119,33 +120,29 @@
                 android:text="Register"
                 app:spinning_bar_color="@color/white" />
 
-            <ImageView
-                android:id="@+id/facebookRegister"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="13dp"
-                app:layout_constraintStart_toStartOf="@id/guidelineRegisterLeft"
-                app:layout_constraintTop_toBottomOf="@id/buttonRegisterRegister"
-                android:src="@drawable/facebook_login" />
-
             <TextView
+                android:id="@+id/tvOrRegister"
+                style="@style/h2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Facebook"
-                app:layout_constraintStart_toStartOf="@id/facebookRegister"
-                app:layout_constraintTop_toTopOf="@id/facebookRegister"
-                app:layout_constraintBottom_toBottomOf="@id/facebookRegister"
-                app:layout_constraintEnd_toEndOf="@id/facebookRegister" />
-
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="Or"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="@id/buttonRegisterRegister"
+                app:layout_constraintStart_toStartOf="@id/buttonRegisterRegister"
+                app:layout_constraintTop_toBottomOf="@id/buttonRegisterRegister" />
 
             <ImageView
                 android:id="@+id/googleRegister"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="13dp"
-                app:layout_constraintEnd_toEndOf="@id/guidelineRegisterRight"
-                app:layout_constraintTop_toBottomOf="@id/buttonRegisterRegister"
-                android:src="@drawable/google_login" />
+                android:layout_marginTop="8dp"
+                android:src="@drawable/google_login"
+                app:layout_constraintEnd_toStartOf="@+id/guidelineRegisterRight"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="@+id/guidelineRegisterLeft"
+                app:layout_constraintTop_toBottomOf="@+id/tvOrRegister" />
 
             <TextView
                 android:layout_width="wrap_content"

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/introductionFragment"
-        android:name="com.example.storein.fragments.IntroductionFragment"
+        android:name="com.example.storein.fragments.loginAndregister.intorduction.IntroductionFragment"
         android:label="IntroductionFragment"
         tools:layout="@layout/fragment_introduction">
         <action
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.storein.fragments.LoginFragment"
+        android:name="com.example.storein.fragments.loginAndregister.login.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login">
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.storein.fragments.RegisterFragment"
+        android:name="com.example.storein.fragments.loginAndregister.register.RegisterFragment"
         android:label="RegisterFragment"
         tools:layout="@layout/fragment_resgiester">
         <action
@@ -39,7 +39,7 @@
     </fragment>
     <fragment
         android:id="@+id/accountOptionsFragment"
-        android:name="com.example.storein.fragments.AccountOptionsFragment"
+        android:name="com.example.storein.fragments.loginAndregister.accountoption.AccountOptionsFragment"
         android:label="AccountOptionsFragment"
         tools:layout="@layout/fragment_account_option">
         <action

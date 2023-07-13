@@ -93,11 +93,10 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_search"
-        app:tabIndicatorHeight="0dp"
+        app:tabIndicatorHeight="3dp"
         app:tabMode="scrollable"
         app:tabRippleColor="@color/white"
         app:tabSelectedTextColor="@color/black"
-
         app:tabTextAppearance="@style/tabLayout_text">
 
 

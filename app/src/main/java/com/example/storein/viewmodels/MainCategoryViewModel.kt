@@ -20,8 +20,19 @@ class MainCategoryViewModel @Inject constructor(
         MutableStateFlow<NetworkResult<List<Product>>>(NetworkResult.UnSpecified())
     val specialProducts = _specialProducts as StateFlow<NetworkResult<List<Product>>>
 
+    private val _bestDeals =
+        MutableStateFlow<NetworkResult<List<Product>>>(NetworkResult.UnSpecified())
+    val bestDeals = _bestDeals as StateFlow<NetworkResult<List<Product>>>
+
+    private val _bestProducts =
+        MutableStateFlow<NetworkResult<List<Product>>>(NetworkResult.UnSpecified())
+    val bestProducts = _bestProducts as StateFlow<NetworkResult<List<Product>>>
+
+
     init {
         fetchSpecialProducts()
+        fetchBestDeals()
+        fetchBestProducts()
     }
 
     fun fetchSpecialProducts() {
@@ -40,6 +51,45 @@ class MainCategoryViewModel @Inject constructor(
             .addOnFailureListener {
                 viewModelScope.launch {
                     _specialProducts.emit(NetworkResult.Error(it.message.toString()))
+                }
+            }
+    }
+
+    fun fetchBestDeals() {
+        viewModelScope.launch {
+            _bestDeals.emit(NetworkResult.Loading())
+        }
+        firebaseFirestore.collection("products")
+            .whereEqualTo("category","Best Deals")
+            .get()
+            .addOnSuccessListener { result ->
+                val bestDealsList = result.toObjects(Product::class.java)
+                viewModelScope.launch {
+                    _bestDeals.emit(NetworkResult.Success(bestDealsList))
+                }
+            }
+            .addOnFailureListener {
+                viewModelScope.launch {
+                    _bestDeals.emit(NetworkResult.Error(it.message.toString()))
+                }
+            }
+    }
+
+    fun fetchBestProducts() {
+        viewModelScope.launch {
+            _bestProducts.emit(NetworkResult.Loading())
+        }
+        firebaseFirestore.collection("products")
+            .get()
+            .addOnSuccessListener { result ->
+                val bestProductsList = result.toObjects(Product::class.java)
+                viewModelScope.launch {
+                    _bestProducts.emit(NetworkResult.Success(bestProductsList))
+                }
+            }
+            .addOnFailureListener {
+                viewModelScope.launch {
+                    _bestProducts.emit(NetworkResult.Error(it.message.toString()))
                 }
             }
     }

@@ -31,7 +31,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var categoriesFragments = arrayListOf<Fragment>(
+        val categoriesFragments = arrayListOf<Fragment>(
             MainCategoryFragment(),
             ChairFragment(),
             CupboardFragment(),
@@ -39,6 +39,8 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             AccessoryFragment(),
             FurnitureFragment()
         )
+
+        binding.viewpagerHome.isUserInputEnabled = false
 
         val viewPager2Adapter = HomeViewPagerAdapter(
             categoriesFragments,

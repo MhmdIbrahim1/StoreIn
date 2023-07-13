@@ -9,8 +9,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.storein.R
+import com.example.storein.adapters.BestDealsAdapter
+import com.example.storein.adapters.BestProductAdapter
 import com.example.storein.adapters.SpecialProductAdapter
 import com.example.storein.databinding.FragmentMainCategoryBinding
 import com.example.storein.utils.NetworkResult
@@ -21,6 +24,10 @@ import kotlinx.coroutines.flow.collect
 @AndroidEntryPoint
 class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
     private lateinit var specialProductAdapter: SpecialProductAdapter
+    private lateinit var bestDealsAdapter: BestDealsAdapter
+    private lateinit var bestProductAdapter: BestProductAdapter
+
+
     private lateinit var binding: FragmentMainCategoryBinding
 
     private val viewModel by viewModels<MainCategoryViewModel>()
@@ -37,6 +44,9 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
         super.onViewCreated(view, savedInstanceState)
 
         setSpecialProductRv()
+        setUpBestDealsRv()
+        setUpBestProductRv()
+
 
         lifecycleScope.launchWhenCreated {
             viewModel.specialProducts.collect() {
@@ -62,6 +72,83 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
                     else -> Unit
                 }
             }
+        }
+
+        lifecycleScope.launchWhenCreated {
+            viewModel.bestDeals.collect() {
+                when (it) {
+                    is NetworkResult.Loading -> {
+                        showDialog()
+                    }
+
+                    is NetworkResult.Success -> {
+                        bestDealsAdapter.differ.submitList(it.data)
+                        hideLoadingDialog()
+                    }
+
+                    is NetworkResult.Error -> {
+                        hideLoadingDialog()
+                        Log.e("MainCategoryFragment", it.message.toString())
+                        Toast.makeText(
+                            requireContext(),
+                            it.message.toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    else -> Unit
+                }
+            }
+        }
+
+        lifecycleScope.launchWhenCreated {
+            viewModel.bestProducts.collect() {
+                when (it) {
+                    is NetworkResult.Loading -> {
+                        showDialog()
+                    }
+
+                    is NetworkResult.Success -> {
+                        bestProductAdapter.differ.submitList(it.data)
+                        hideLoadingDialog()
+                    }
+
+                    is NetworkResult.Error -> {
+                        hideLoadingDialog()
+                        Log.e("MainCategoryFragment", it.message.toString())
+                        Toast.makeText(
+                            requireContext(),
+                            it.message.toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    else -> Unit
+                }
+            }
+        }
+    }
+
+    private fun setUpBestProductRv() {
+           bestProductAdapter = BestProductAdapter()
+            binding.rvBestProducts.apply {
+                layoutManager = GridLayoutManager(
+                    requireContext(),
+                    2,
+                    GridLayoutManager.VERTICAL,
+                    false
+                )
+                adapter = bestProductAdapter
+            }
+    }
+
+    private fun setUpBestDealsRv() {
+        bestDealsAdapter = BestDealsAdapter()
+        binding.rvBestDealsProducts.apply {
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            adapter = bestDealsAdapter
         }
     }
 

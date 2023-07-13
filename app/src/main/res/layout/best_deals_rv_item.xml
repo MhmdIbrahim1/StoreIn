@@ -12,7 +12,7 @@
         android:layout_height="88dp">
 
         <ImageView
-            android:id="@+id/img_best_deal"
+            android:id="@+id/imageViewBestDealsRvItem"
             android:layout_width="64dp"
             android:layout_height="64dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,8 +25,8 @@
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:text="Scotch Premium"
-            app:layout_constraintStart_toEndOf="@id/img_best_deal"
-            app:layout_constraintTop_toTopOf="@id/img_best_deal"
+            app:layout_constraintStart_toEndOf="@id/imageViewBestDealsRvItem"
+            app:layout_constraintTop_toTopOf="@id/imageViewBestDealsRvItem"
             android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
             android:fontFamily="@font/poppins_light"

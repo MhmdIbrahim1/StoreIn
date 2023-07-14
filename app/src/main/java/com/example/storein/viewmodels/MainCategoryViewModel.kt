@@ -28,7 +28,9 @@ class MainCategoryViewModel @Inject constructor(
         MutableStateFlow<NetworkResult<List<Product>>>(NetworkResult.UnSpecified())
     val bestProducts = _bestProducts as StateFlow<NetworkResult<List<Product>>>
 
-    private val pagingInfo = PagingInfo()
+    private val pagingInfoBestProduct = PagingInfo()
+    private val pagingInfoBestDeals = PagingInfo()
+    private val pagingInfoSpecialProduct = PagingInfo()
 
     init {
         fetchSpecialProducts()
@@ -37,75 +39,54 @@ class MainCategoryViewModel @Inject constructor(
     }
 
     fun fetchSpecialProducts() {
-        viewModelScope.launch {
-            _specialProducts.emit(NetworkResult.Loading())
-        }
-        firebaseFirestore.collection("products")
-            .whereEqualTo("category", "Special Products")
-            .get()
-            .addOnSuccessListener { result ->
-                val specialProductsList = result.toObjects(Product::class.java)
-                viewModelScope.launch {
-                    _specialProducts.emit(NetworkResult.Success(specialProductsList))
-                }
-            }
-            .addOnFailureListener {
-                viewModelScope.launch {
-                    _specialProducts.emit(NetworkResult.Error(it.message.toString()))
-                }
-            }
+        fetchProductsByCategory("Special Products", pagingInfoSpecialProduct, _specialProducts)
     }
 
     fun fetchBestDeals() {
-        viewModelScope.launch {
-            _bestDeals.emit(NetworkResult.Loading())
-        }
-        firebaseFirestore.collection("products")
-            .whereEqualTo("category", "Best Deals")
-            .get()
-            .addOnSuccessListener { result ->
-                val bestDealsList = result.toObjects(Product::class.java)
-                viewModelScope.launch {
-                    _bestDeals.emit(NetworkResult.Success(bestDealsList))
-                }
-            }
-            .addOnFailureListener {
-                viewModelScope.launch {
-                    _bestDeals.emit(NetworkResult.Error(it.message.toString()))
-                }
-            }
+        fetchProductsByCategory("Best Deals", pagingInfoBestDeals, _bestDeals)
     }
 
     fun fetchBestProducts() {
+        fetchProductsByCategory(null, pagingInfoBestProduct, _bestProducts)
+    }
+
+    private fun fetchProductsByCategory(
+        category: String?,
+        pagingInfo: PagingInfo,
+        resultFlow: MutableStateFlow<NetworkResult<List<Product>>>
+    ) {
         if (!pagingInfo.isPagingEnd) {
             viewModelScope.launch {
-                _bestProducts.emit(NetworkResult.Loading())
+                resultFlow.emit(NetworkResult.Loading())
             }
-            //we can use query to get the data like this
-            //firebaseFirestore.collection("products").whereEqualTo("category", "Chair").orderBy("id")
-            firebaseFirestore.collection("products")
-                .limit(pagingInfo.bestProductPage * 10)
+            val query = if (category != null) {
+                firebaseFirestore.collection("products")
+                    .whereEqualTo("category", category)
+            } else {
+                firebaseFirestore.collection("products")
+            }
+            query.limit(pagingInfo.page * 10)
                 .get()
                 .addOnSuccessListener { result ->
-                    val bestProductsList = result.toObjects(Product::class.java)
-                    pagingInfo.isPagingEnd = bestProductsList == pagingInfo.oldBestProduct
-                    pagingInfo.oldBestProduct = bestProductsList
+                    val productList = result.toObjects(Product::class.java)
+                    pagingInfo.isPagingEnd = productList == pagingInfo.oldData
+                    pagingInfo.oldData = productList
                     viewModelScope.launch {
-                        _bestProducts.emit(NetworkResult.Success(bestProductsList))
+                        resultFlow.emit(NetworkResult.Success(productList))
                     }
-                    pagingInfo.bestProductPage++
+                    pagingInfo.page++
                 }
-                .addOnFailureListener {
+                .addOnFailureListener { exception ->
                     viewModelScope.launch {
-                        _bestProducts.emit(NetworkResult.Error(it.message.toString()))
+                        resultFlow.emit(NetworkResult.Error(exception.message.toString()))
                     }
                 }
         }
     }
-}
 
-internal data class PagingInfo(
-    var bestProductPage: Long = 1,
-    var oldBestProduct: List<Product> = emptyList(),
-    var isPagingEnd: Boolean = false
-)
+    internal data class PagingInfo(
+        var page: Long = 1,
+        var oldData: List<Product> = emptyList(),
+        var isPagingEnd: Boolean = false
+    )
+}

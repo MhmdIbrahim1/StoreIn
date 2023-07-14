@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.ViewCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.storein.R
 import com.example.storein.adapters.BestDealsAdapter
 import com.example.storein.adapters.BestProductAdapter
@@ -27,10 +29,11 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
     private lateinit var bestDealsAdapter: BestDealsAdapter
     private lateinit var bestProductAdapter: BestProductAdapter
 
-
     private lateinit var binding: FragmentMainCategoryBinding
+    private lateinit var nestedScrollView: NestedScrollView
 
     private val viewModel by viewModels<MainCategoryViewModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,19 +50,67 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
         setUpBestDealsRv()
         setUpBestProductRv()
 
+        nestedScrollView = binding.nestedScrollMainCategory
+        nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
+            val reachEnd = scrollY >= (nestedScrollView.getChildAt(0).measuredHeight - nestedScrollView.measuredHeight)
+            if (reachEnd) {
+                fetchNewData()
+            }
+        })
 
+        binding.rvBestDealsProducts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+
+                val reachEnd = !recyclerView.canScrollHorizontally(1)
+                if (reachEnd) {
+                    fetchNewDataForBestDealsRV()
+                }
+            }
+        })
+
+        binding.rvSpecialProducts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+
+                val reachEnd = !recyclerView.canScrollHorizontally(1)
+                if (reachEnd) {
+                    fetchNewDataForSpecialProductsRV()
+                }
+            }
+        })
+
+
+
+
+        observeSpecialProducts()
+        observeBestDeals()
+        observeBestProducts()
+
+
+    }
+
+    private fun fetchNewData() {
+        viewModel.fetchBestProducts()
+    }
+
+    private fun fetchNewDataForBestDealsRV() {
+        viewModel.fetchBestDeals()
+    }
+
+    private fun fetchNewDataForSpecialProductsRV() {
+        viewModel.fetchSpecialProducts()
+    }
+
+    private fun observeSpecialProducts() {
         lifecycleScope.launchWhenCreated {
-            viewModel.specialProducts.collect() {
+            viewModel.specialProducts.collect {
                 when (it) {
                     is NetworkResult.Loading -> {
                         showDialog()
                     }
-
                     is NetworkResult.Success -> {
                         specialProductAdapter.differ.submitList(it.data)
                         hideLoadingDialog()
                     }
-
                     is NetworkResult.Error -> {
                         hideLoadingDialog()
                         Log.e("MainCategoryFragment", it.message.toString())
@@ -73,19 +124,19 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
                 }
             }
         }
+    }
 
+    private fun observeBestDeals() {
         lifecycleScope.launchWhenCreated {
-            viewModel.bestDeals.collect() {
+            viewModel.bestDeals.collect {
                 when (it) {
                     is NetworkResult.Loading -> {
                         showDialog()
                     }
-
                     is NetworkResult.Success -> {
                         bestDealsAdapter.differ.submitList(it.data)
                         hideLoadingDialog()
                     }
-
                     is NetworkResult.Error -> {
                         hideLoadingDialog()
                         Log.e("MainCategoryFragment", it.message.toString())
@@ -99,19 +150,19 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
                 }
             }
         }
+    }
 
+    private fun observeBestProducts() {
         lifecycleScope.launchWhenCreated {
-            viewModel.bestProducts.collect() {
+            viewModel.bestProducts.collect {
                 when (it) {
                     is NetworkResult.Loading -> {
                         binding.bestProductsProgressbar.visibility = View.VISIBLE
                     }
-
                     is NetworkResult.Success -> {
                         bestProductAdapter.differ.submitList(it.data)
                         binding.bestProductsProgressbar.visibility = View.GONE
                     }
-
                     is NetworkResult.Error -> {
                         binding.bestProductsProgressbar.visibility = View.GONE
                         Log.e("MainCategoryFragment", it.message.toString())
@@ -125,27 +176,19 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
                 }
             }
         }
-
-        binding.nestedScrollMainCategory.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener{ v, _, scrollY, _, _ ->
-            if(v.getChildAt(0).bottom <= (v.height + scrollY)){
-                viewModel.fetchBestProducts()
-            }
-
-        })
-
     }
 
     private fun setUpBestProductRv() {
-           bestProductAdapter = BestProductAdapter()
-            binding.rvBestProducts.apply {
-                layoutManager = GridLayoutManager(
-                    requireContext(),
-                    2,
-                    GridLayoutManager.VERTICAL,
-                    false
-                )
-                adapter = bestProductAdapter
-            }
+        bestProductAdapter = BestProductAdapter()
+        binding.rvBestProducts.apply {
+            layoutManager = GridLayoutManager(
+                requireContext(),
+                2,
+                GridLayoutManager.VERTICAL,
+                false
+            )
+            adapter = bestProductAdapter
+        }
     }
 
     private fun setUpBestDealsRv() {
@@ -159,15 +202,6 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
             adapter = bestDealsAdapter
         }
     }
-
-    private fun hideLoadingDialog() {
-        binding.mainCategoryProgressbar.visibility = View.GONE
-    }
-
-    private fun showDialog() {
-        binding.mainCategoryProgressbar.visibility = View.VISIBLE
-    }
-
     private fun setSpecialProductRv() {
         specialProductAdapter = SpecialProductAdapter()
         binding.rvSpecialProducts.apply {
@@ -180,6 +214,12 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
         }
     }
 
+    private fun hideLoadingDialog() {
+        binding.mainCategoryProgressbar.visibility = View.GONE
+    }
 
+    private fun showDialog() {
+        binding.mainCategoryProgressbar.visibility = View.VISIBLE
+    }
 
 }

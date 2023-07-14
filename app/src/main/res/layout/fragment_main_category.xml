@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -15,19 +16,40 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ProgressBar
-                android:id="@+id/mainCategoryProgressbar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:indeterminateTint="@color/g_gray700" />
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerSpecialProducts"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="1dp"
+                tools:layout_editor_absoluteY="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/placeholder_special_products" />
+                </LinearLayout>
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_188sdp"
+                    android:orientation="vertical">
+                    <include layout="@layout/placeholder_best_deals" />
+                </LinearLayout>
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_350sdp"
+                    android:orientation="vertical">
+                    <include layout="@layout/placeholder_best_products" />
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvSpecialProducts"
@@ -37,10 +59,8 @@
                 android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-
-
+                app:layout_constraintTop_toTopOf="parent"
+              />
 
             <TextView
                 android:id="@+id/tvBestDeals"
@@ -49,6 +69,7 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/poppins_thin"
                 android:text="Best deals"
+                android:visibility="gone"
                 android:textColor="@color/black"
                 android:textSize="22sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +85,8 @@
                 android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="@id/rvSpecialProducts"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvBestDeals"/>
+                app:layout_constraintTop_toBottomOf="@id/tvBestDeals"
+               />
 
 
             <TextView
@@ -74,6 +96,7 @@
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/poppins_thin"
                 android:text="Best Products"
+                android:visibility="gone"
                 android:textColor="@color/black"
                 android:textSize="22sp"
                 app:layout_constraintStart_toStartOf="@id/rvSpecialProducts"
@@ -89,19 +112,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvBestProducts"
                 android:layout_marginEnd="15dp"
-                android:overScrollMode="never"
-                />
-
-            <ProgressBar
-                android:id="@+id/bestProductsProgressbar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_marginBottom="5dp"
-                android:indeterminateTint="@color/g_gray700"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:overScrollMode="never" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

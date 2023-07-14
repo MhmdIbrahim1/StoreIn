@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.ViewCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -28,11 +27,12 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
     private lateinit var specialProductAdapter: SpecialProductAdapter
     private lateinit var bestDealsAdapter: BestDealsAdapter
     private lateinit var bestProductAdapter: BestProductAdapter
-
-    private lateinit var binding: FragmentMainCategoryBinding
     private lateinit var nestedScrollView: NestedScrollView
 
+    private lateinit var binding: FragmentMainCategoryBinding
     private val viewModel by viewModels<MainCategoryViewModel>()
+
+    private var isFirstTime = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,7 +52,8 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
 
         nestedScrollView = binding.nestedScrollMainCategory
         nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
-            val reachEnd = scrollY >= (nestedScrollView.getChildAt(0).measuredHeight - nestedScrollView.measuredHeight)
+            val reachEnd =
+                scrollY >= (nestedScrollView.getChildAt(0).measuredHeight - nestedScrollView.measuredHeight)
             if (reachEnd) {
                 fetchNewData()
             }
@@ -105,14 +106,20 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
             viewModel.specialProducts.collect {
                 when (it) {
                     is NetworkResult.Loading -> {
-                        showDialog()
+                        // Check if it's the first time to show the shimmer effect
+                        if (isFirstTime) {
+                            showShimmerEffect()
+                            isFirstTime = false
+                        }
                     }
+
                     is NetworkResult.Success -> {
                         specialProductAdapter.differ.submitList(it.data)
-                        hideLoadingDialog()
+                        hideShimmerEffect()
                     }
+
                     is NetworkResult.Error -> {
-                        hideLoadingDialog()
+                        hideShimmerEffect()
                         Log.e("MainCategoryFragment", it.message.toString())
                         Toast.makeText(
                             requireContext(),
@@ -120,6 +127,7 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
+
                     else -> Unit
                 }
             }
@@ -131,14 +139,20 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
             viewModel.bestDeals.collect {
                 when (it) {
                     is NetworkResult.Loading -> {
-                        showDialog()
+                        // Check if it's the first time to show the shimmer effect
+                        if (isFirstTime) {
+                            showShimmerEffect()
+                            isFirstTime = false
+                        }
                     }
+
                     is NetworkResult.Success -> {
                         bestDealsAdapter.differ.submitList(it.data)
-                        hideLoadingDialog()
+                        hideShimmerEffect()
                     }
+
                     is NetworkResult.Error -> {
-                        hideLoadingDialog()
+                        hideShimmerEffect()
                         Log.e("MainCategoryFragment", it.message.toString())
                         Toast.makeText(
                             requireContext(),
@@ -146,6 +160,7 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
+
                     else -> Unit
                 }
             }
@@ -157,14 +172,20 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
             viewModel.bestProducts.collect {
                 when (it) {
                     is NetworkResult.Loading -> {
-                        binding.bestProductsProgressbar.visibility = View.VISIBLE
+                        // Check if it's the first time to show the shimmer effect
+                        if (isFirstTime) {
+                            showShimmerEffect()
+                            isFirstTime = false
+                        }
                     }
+
                     is NetworkResult.Success -> {
                         bestProductAdapter.differ.submitList(it.data)
-                        binding.bestProductsProgressbar.visibility = View.GONE
+                        hideShimmerEffect()
                     }
+
                     is NetworkResult.Error -> {
-                        binding.bestProductsProgressbar.visibility = View.GONE
+                        hideShimmerEffect()
                         Log.e("MainCategoryFragment", it.message.toString())
                         Toast.makeText(
                             requireContext(),
@@ -172,6 +193,7 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
+
                     else -> Unit
                 }
             }
@@ -202,6 +224,7 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
             adapter = bestDealsAdapter
         }
     }
+
     private fun setSpecialProductRv() {
         specialProductAdapter = SpecialProductAdapter()
         binding.rvSpecialProducts.apply {
@@ -214,12 +237,25 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
         }
     }
 
-    private fun hideLoadingDialog() {
-        binding.mainCategoryProgressbar.visibility = View.GONE
+
+    private fun showShimmerEffect() {
+        binding.shimmerSpecialProducts.startShimmer()
+        binding.shimmerSpecialProducts.visibility = View.VISIBLE
+        binding.rvSpecialProducts.visibility = View.GONE
+        binding.rvBestProducts.visibility = View.GONE
+        binding.rvBestDealsProducts.visibility = View.GONE
+        binding.tvBestProducts.visibility = View.GONE
+        binding.tvBestDeals.visibility = View.GONE
     }
 
-    private fun showDialog() {
-        binding.mainCategoryProgressbar.visibility = View.VISIBLE
+    private fun hideShimmerEffect() {
+        binding.shimmerSpecialProducts.stopShimmer()
+        binding.shimmerSpecialProducts.visibility = View.GONE
+        binding.rvSpecialProducts.visibility = View.VISIBLE
+        binding.rvBestProducts.visibility = View.VISIBLE
+        binding.rvBestDealsProducts.visibility = View.VISIBLE
+        binding.tvBestProducts.visibility = View.VISIBLE
+        binding.tvBestDeals.visibility = View.VISIBLE
     }
 
 }

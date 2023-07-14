@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -19,7 +20,6 @@ import com.example.storein.databinding.FragmentMainCategoryBinding
 import com.example.storein.utils.NetworkResult
 import com.example.storein.viewmodels.MainCategoryViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
@@ -104,16 +104,16 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
             viewModel.bestProducts.collect() {
                 when (it) {
                     is NetworkResult.Loading -> {
-                        showDialog()
+                        binding.bestProductsProgressbar.visibility = View.VISIBLE
                     }
 
                     is NetworkResult.Success -> {
                         bestProductAdapter.differ.submitList(it.data)
-                        hideLoadingDialog()
+                        binding.bestProductsProgressbar.visibility = View.GONE
                     }
 
                     is NetworkResult.Error -> {
-                        hideLoadingDialog()
+                        binding.bestProductsProgressbar.visibility = View.GONE
                         Log.e("MainCategoryFragment", it.message.toString())
                         Toast.makeText(
                             requireContext(),
@@ -125,6 +125,14 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
                 }
             }
         }
+
+        binding.nestedScrollMainCategory.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener{ v, _, scrollY, _, _ ->
+            if(v.getChildAt(0).bottom <= (v.height + scrollY)){
+                viewModel.fetchBestProducts()
+            }
+
+        })
+
     }
 
     private fun setUpBestProductRv() {
@@ -171,6 +179,7 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
             adapter = specialProductAdapter
         }
     }
+
 
 
 }

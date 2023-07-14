@@ -13,6 +13,7 @@ import com.example.storein.fragments.categories.ChairFragment
 import com.example.storein.fragments.categories.CupboardFragment
 import com.example.storein.fragments.categories.FurnitureFragment
 import com.example.storein.fragments.categories.MainCategoryFragment
+import com.example.storein.fragments.categories.ShoesFragment
 import com.example.storein.fragments.categories.TableFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -33,6 +34,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
         val categoriesFragments = arrayListOf<Fragment>(
             MainCategoryFragment(),
+            ShoesFragment(),
             ChairFragment(),
             CupboardFragment(),
             TableFragment(),
@@ -51,11 +53,12 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         TabLayoutMediator(binding.tabLayout, binding.viewpagerHome) { tab, position ->
             when(position) {
                 0 -> tab.text = "Home"
-                1 -> tab.text = "Chair"
-                2 -> tab.text = "Cupboard"
-                3 -> tab.text = "Table"
-                4 -> tab.text = "Accessory"
-                5 -> tab.text = "Furniture"
+                1 -> tab.text = "Shoes"
+                2 -> tab.text = "Chair"
+                3 -> tab.text = "Cupboard"
+                4 -> tab.text = "Table"
+                5 -> tab.text = "Accessory"
+                6 -> tab.text = "Furniture"
             }
         }.attach()
     }

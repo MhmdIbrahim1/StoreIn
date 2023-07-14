@@ -1,11 +1,14 @@
 package com.example.storein.adapters
 
+import android.graphics.Paint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.load
+import com.example.storein.R
 import com.example.storein.data.Product
 import com.example.storein.databinding.BestDealsRvItemBinding
 
@@ -14,19 +17,23 @@ class BestDealsAdapter: RecyclerView.Adapter<BestDealsAdapter.BestDealsViewHolde
     inner class BestDealsViewHolder(private val binding: BestDealsRvItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product) {
             binding.apply {
-                Glide.with(itemView)
-                    .load(product.images[0])
-                    .into(imageViewBestDealsRvItem)
-
+                imageViewBestDealsRvItem.load(product.images.getOrNull(0)) {
+                    crossfade(600)
+                    error(R.drawable.error_placeholder)
+                }
                 product.offerPercentage?.let {
                     val remainingPercentage = 1f - it
                     val priceAfterDiscount = product.price * remainingPercentage
-                    tvNewPrice.text = "$ ${String.format("%.2f", priceAfterDiscount)}"
+                    tvNewPrice.text = "E£ ${String.format("%.2f", priceAfterDiscount)}"
+                    tvNewPrice.visibility = View.VISIBLE
+                    tvOldPrice.paintFlags = tvNewPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                } ?: run {
+                    tvNewPrice.visibility = View.GONE
                 }
-                tvOldPrice.text = "$ ${product.price}"
+                tvOldPrice.text = "E£ ${product.price}"
                 tvDealProductName.text = product.name
-            }
 
+            }
         }
     }
 

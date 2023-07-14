@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.bumptech.glide.Glide
 import com.example.storein.data.Product
 import com.example.storein.databinding.SpecialRvItemBinding
@@ -17,12 +18,20 @@ class SpecialProductAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product) {
             binding.apply {
-                Glide.with(itemView)
-                    .load(product.images[0])
-                    .into(imageViewSpecialRvItem)
-
+                imageViewSpecialRvItem.load(product.images.getOrNull(0)) {
+                    crossfade(600)
+                    error(com.example.storein.R.drawable.error_placeholder)
+                }
+                product.offerPercentage?.let {
+                    val remainingPercentage = 1f - it
+                    val priceAfterDiscount = product.price * remainingPercentage
+                    tvSpecialProductPrice.text =
+                        "E£ ${String.format("%.2f", priceAfterDiscount)}"
+                }
+                if (product.offerPercentage == null) {
+                    tvSpecialProductPrice.text = "E£ ${product.price}"
+                }
                 tvSpecialProductName.text = product.name
-                tvSpecialProductPrice.text = product.price.toString()
             }
         }
     }

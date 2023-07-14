@@ -7,4 +7,5 @@ object Constants {
     const val TAG = "RegisterFragment"
     const val INTRODUCTION_SP = "IntroductionSP"
     const val INTRODUCTION_KEY = "IntroductionKey"
+    const val INTRODUCTION_VALUE = "IntroductionValue"
 }

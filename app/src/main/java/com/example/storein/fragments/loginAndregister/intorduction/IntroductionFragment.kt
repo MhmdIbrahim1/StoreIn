@@ -7,11 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.storein.R
 import com.example.storein.activites.ShoppingActivity
 import com.example.storein.databinding.FragmentIntroductionBinding
 import com.example.storein.viewmodels.IntroductionViewModel
+import com.example.storein.viewmodels.IntroductionViewModel.Companion.ACCOUNT_OPTION_FRAGMENT
+import com.example.storein.viewmodels.IntroductionViewModel.Companion.SHOPPING_ACTIVITY
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -19,7 +22,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class IntroductionFragment : Fragment(R.layout.fragment_introduction) {
     private lateinit var binding: FragmentIntroductionBinding
-    private val viewModel: IntroductionViewModel by viewModels()
+    private val viewModel by viewModels<IntroductionViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,11 +30,7 @@ class IntroductionFragment : Fragment(R.layout.fragment_introduction) {
     ): View {
         binding = FragmentIntroductionBinding.inflate(inflater, container, false)
 
-        if (viewModel.hasUserFinishedIntroduction()) {
-            val intent = Intent(requireActivity(), ShoppingActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-        }
+
 
         return binding.root
     }
@@ -39,8 +38,26 @@ class IntroductionFragment : Fragment(R.layout.fragment_introduction) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.navigateState.collect {
+                when (it) {
+                    SHOPPING_ACTIVITY -> {
+                        Intent(requireActivity(), ShoppingActivity::class.java).also { intent ->
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                            startActivity(intent)
+                        }
+                    }
+                    ACCOUNT_OPTION_FRAGMENT -> {
+                        findNavController().navigate(it)
+                    }
+                    else -> Unit
+                }
+            }
+        }
+
         binding.buttonStart.setOnClickListener {
-            viewModel.saveUserLoggedInState()
+            viewModel.startButtonClicked()
             findNavController().navigate(R.id.action_introductionFragment_to_accountOptionsFragment)
         }
     }

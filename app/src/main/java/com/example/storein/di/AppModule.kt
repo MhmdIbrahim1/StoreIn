@@ -4,9 +4,8 @@ import android.app.Application
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import com.example.storein.utils.Constants.INTRODUCTION_SP
+import com.example.storein.utils.Constants.INTRODUCTION_KEY
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import dagger.Module
@@ -30,7 +29,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSharedPreferences(@ApplicationContext appContext: Context): SharedPreferences {
-        return appContext.getSharedPreferences("PREFS_NAME", MODE_PRIVATE)
-    }
+    fun provideIntroductionSP(
+        application: Application
+    ) = application.getSharedPreferences(INTRODUCTION_KEY, MODE_PRIVATE)
 }

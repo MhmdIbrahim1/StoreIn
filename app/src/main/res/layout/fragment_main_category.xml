@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                tools:layout_editor_absoluteX="1dp"
+                tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp">
 
                 <LinearLayout
@@ -38,6 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_188sdp"
                     android:orientation="vertical">
+
                     <include layout="@layout/placeholder_best_deals" />
                 </LinearLayout>
 
@@ -47,6 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_350sdp"
                     android:orientation="vertical">
+
                     <include layout="@layout/placeholder_best_products" />
                 </LinearLayout>
             </com.facebook.shimmer.ShimmerFrameLayout>

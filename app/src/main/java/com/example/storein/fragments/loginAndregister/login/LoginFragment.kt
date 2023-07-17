@@ -81,30 +81,30 @@ class LoginFragment : Fragment() {
             }
         }
 
-        lifecycleScope.launchWhenStarted {
-            viewModel.login.collect() {
-                when (it) {
-                    is NetworkResult.Loading -> {
-                        binding.buttonLoginLogin.startAnimation()
-                    }
-
-                    is NetworkResult.Success -> {
-                        binding.buttonLoginLogin.revertAnimation()
-                        Intent(requireActivity(), ShoppingActivity::class.java).also { intent ->
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                            startActivity(intent)
+            lifecycleScope.launchWhenStarted {
+                viewModel.login.collect() {
+                    when (it) {
+                        is NetworkResult.Loading -> {
+                            binding.buttonLoginLogin.startAnimation()
                         }
-                    }
 
-                    is NetworkResult.Error -> {
-                        binding.buttonLoginLogin.revertAnimation()
-                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
-                    }
+                        is NetworkResult.Success -> {
+                            binding.buttonLoginLogin.revertAnimation()
+                            Intent(requireActivity(), ShoppingActivity::class.java).also { intent ->
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                                startActivity(intent)
+                            }
+                        }
 
-                    else -> Unit
+                        is NetworkResult.Error -> {
+                            binding.buttonLoginLogin.revertAnimation()
+                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                        }
+
+                        else -> Unit
+                    }
                 }
             }
-        }
 
         binding.googleLogin.setOnClickListener {
             val signInClient = getGoogleSignInClient(requireContext())

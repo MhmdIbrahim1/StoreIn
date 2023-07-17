@@ -36,6 +36,5 @@ fun validatePassword(password: String): RegisterValidation {
         .requestIdToken(context.getString(R.string.default_web_client_id))
         .build()
     return GoogleSignIn.getClient(context, gso)
-
 }
 

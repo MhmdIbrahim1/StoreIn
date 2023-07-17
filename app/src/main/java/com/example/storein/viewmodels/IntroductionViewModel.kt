@@ -26,22 +26,22 @@ class IntroductionViewModel @Inject constructor(
         val ACCOUNT_OPTION_FRAGMENT get() = R.id.action_introductionFragment_to_accountOptionsFragment
     }
 
-    init {
-        val isButtonClicked = sharedPreferences.getBoolean(INTRODUCTION_VALUE, false)
-        val user = firebaseAuth.currentUser
+        init {
+            val isButtonClicked = sharedPreferences.getBoolean(INTRODUCTION_VALUE, false)
+            val user = firebaseAuth.currentUser
 
-        if (user != null) {
-            viewModelScope.launch {
-                _navigateState.emit(SHOPPING_ACTIVITY)
+            if (user != null) {
+                viewModelScope.launch {
+                    _navigateState.emit(SHOPPING_ACTIVITY)
+                }
+            } else if (isButtonClicked) {
+                viewModelScope.launch {
+                    _navigateState.emit(ACCOUNT_OPTION_FRAGMENT)
+                }
+            } else {
+                Unit
+                }
             }
-        } else if (isButtonClicked) {
-            viewModelScope.launch {
-                _navigateState.emit(ACCOUNT_OPTION_FRAGMENT)
-            }
-        } else {
-            Unit
-            }
-        }
 
 
     fun startButtonClicked() {

@@ -54,6 +54,7 @@ class RegisterFragment : Fragment() {
                 viewModel.createAccountWithEmailAndPassword(user, password)
             }
         }
+
         lifecycleScope.launchWhenStarted {
             viewModel.register.collect() {
                 when (it) {

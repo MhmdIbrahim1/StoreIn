@@ -1,5 +1,6 @@
 package com.example.storein.adapters
 
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,19 +17,19 @@ class SizesAdapter: RecyclerView.Adapter<SizesAdapter.SizesViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
         fun bind(size: String, position: Int) {
             binding.tvSize.text = size
-            if (position == selectedPosition) { // size is selected
+            if (position == selectedPosition) { //Size is selected
                 binding.apply {
                     imageShadow.visibility = View.VISIBLE
                 }
-            } else { // image is not selected
+            } else { //Size is not selected
                 binding.apply {
-                    imageShadow.visibility = View.GONE
+                    imageShadow.visibility = View.INVISIBLE
                 }
             }
         }
     }
 
-    private val differCallback = object : DiffUtil.ItemCallback<String>() {
+    private val diffCallback = object : DiffUtil.ItemCallback<String>() {
         override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
             return oldItem == newItem
         }
@@ -38,27 +39,23 @@ class SizesAdapter: RecyclerView.Adapter<SizesAdapter.SizesViewHolder>() {
         }
     }
 
-    val differ = AsyncListDiffer(this, differCallback)
+    val differ = AsyncListDiffer(this, diffCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SizesViewHolder {
         return SizesViewHolder(
             SizeRvItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
+                LayoutInflater.from(parent.context)
             )
         )
     }
-
 
     override fun onBindViewHolder(holder: SizesViewHolder, position: Int) {
         val size = differ.currentList[position]
         holder.bind(size, position)
 
-        if (selectedPosition >= 0)
-            notifyItemChanged(selectedPosition)
-
         holder.itemView.setOnClickListener {
+            if (selectedPosition >= 0)
+                notifyItemChanged(selectedPosition)
             selectedPosition = holder.adapterPosition
             notifyItemChanged(selectedPosition)
             onItemClick?.invoke(size)
@@ -69,7 +66,5 @@ class SizesAdapter: RecyclerView.Adapter<SizesAdapter.SizesViewHolder>() {
         return differ.currentList.size
     }
 
-
-    var onItemClick: ((String) -> Unit)? = null // listener for item click using lambda function
-
+    var onItemClick: ((String) -> Unit)? = null
 }

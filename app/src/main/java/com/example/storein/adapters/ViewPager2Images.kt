@@ -15,7 +15,7 @@ class ViewPager2Images : RecyclerView.Adapter<ViewPager2Images.ViewPager2ImagesV
         fun bind(imagePath: String) {
            binding.apply {
                     imageProductDetails.load(imagePath) {
-                        crossfade(600)
+                        crossfade(200)
                     }
                 }
         }

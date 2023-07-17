@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nestedScrollBaseCategory"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,6 +10,40 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerSpecialProducts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/_15sdp">
+
+                <include layout="@layout/placeholder_special_products" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_188sdp"
+                android:paddingTop="@dimen/_15sdp"
+                android:orientation="vertical">
+
+                <include layout="@layout/placeholder_best_products" />
+
+                <include layout="@layout/placeholder_best_products" />
+
+                <include layout="@layout/placeholder_best_products" />
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvOffer"
             android:layout_width="match_parent"
@@ -26,11 +61,11 @@
             android:layout_marginTop="30dp"
             android:fontFamily="@font/poppins_thin"
             android:text="Best Products"
-            android:visibility="gone"
             android:textColor="@color/black"
             android:textSize="22sp"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="@id/rvOffer"
-            app:layout_constraintTop_toBottomOf="@id/rvOffer"/>
+            app:layout_constraintTop_toBottomOf="@id/rvOffer" />
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -47,7 +82,6 @@
             app:layout_constraintTop_toBottomOf="@id/tvBestProducts" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </androidx.core.widget.NestedScrollView>

@@ -7,21 +7,22 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.storein.R
 import com.example.storein.adapters.BestProductAdapter
 import com.example.storein.databinding.FragmentBaseCategoryBinding
 
 open class BaseCategoryFragment : Fragment(R.layout.fragment_base_category) {
-    private lateinit var binding: FragmentBaseCategoryBinding
-    private lateinit var offerAdapter: BestProductAdapter
-    private lateinit var bestProductAdapter: BestProductAdapter
+    lateinit var binding: FragmentBaseCategoryBinding
+    protected val offerAdapter: BestProductAdapter by lazy { BestProductAdapter() }
+    protected val bestProductAdapter: BestProductAdapter by lazy { BestProductAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentBaseCategoryBinding.inflate(inflater)
+        binding = FragmentBaseCategoryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -30,10 +31,36 @@ open class BaseCategoryFragment : Fragment(R.layout.fragment_base_category) {
 
         setUpOfferRV()
         setUpBestProductRv()
+
+        binding.rvOffer.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                if (!recyclerView.canScrollHorizontally(1) && dx != 0){
+                    onOfferPagingRequest()
+                }
+            }
+        })
+
+        binding.nestedScrollBaseCategory.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            val reachEnd =
+                scrollY >= (binding.nestedScrollBaseCategory.getChildAt(0).measuredHeight - binding.nestedScrollBaseCategory.measuredHeight)
+            if (reachEnd) {
+                onBestProductPagingRequest()
+            }
+        }
     }
 
+    open fun onOfferPagingRequest() {
+
+    }
+
+    open fun onBestProductPagingRequest() {
+
+    }
+
+
     private fun setUpOfferRV() {
-        offerAdapter = BestProductAdapter()
         binding.rvOffer.apply {
             layoutManager = LinearLayoutManager(
                 requireContext(),
@@ -45,7 +72,6 @@ open class BaseCategoryFragment : Fragment(R.layout.fragment_base_category) {
     }
 
     private fun setUpBestProductRv() {
-        bestProductAdapter = BestProductAdapter()
         binding.rvBestProducts.apply {
             layoutManager = GridLayoutManager(
                 requireContext(),

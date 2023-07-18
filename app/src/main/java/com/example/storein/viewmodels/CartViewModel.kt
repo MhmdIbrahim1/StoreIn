@@ -46,7 +46,7 @@ class CartViewModel @Inject constructor(
                     cartProductDocumented = value.documents
                     val cartProducts = value.toObjects(CartProduct::class.java)
                     viewModelScope.launch {
-                        NetworkResult.Success(cartProducts)
+                        _cartProducts.emit(NetworkResult.Success(cartProducts))
                     }
                 }
 

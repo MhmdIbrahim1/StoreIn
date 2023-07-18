@@ -19,6 +19,7 @@ import com.example.storein.adapters.BestDealsAdapter
 import com.example.storein.adapters.BestProductAdapter
 import com.example.storein.adapters.SpecialProductAdapter
 import com.example.storein.databinding.FragmentMainCategoryBinding
+import com.example.storein.helper.getProductPrice
 import com.example.storein.utils.NetworkResult
 import com.example.storein.utils.ShowBottomNavigation
 import com.example.storein.viewmodels.MainCategoryViewModel
@@ -53,25 +54,47 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
         setUpBestProductRv()
 
         specialProductAdapter.onClick = {
+            // Calculate the price after applying the offer percentage (if available)
+            val priceAfterOffer = it.offerPercentage?.getProductPrice(it.price) ?: it.price
+
+            // Create a new product object with the updated price
+            val updatedProduct = it.copy(price = priceAfterOffer)
+
+            // Pass the updated product to the ProductDetailsFragment
             val b = Bundle().apply {
-                putParcelable("product", it)
+                putParcelable("product", updatedProduct)
             }
             findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment, b)
         }
 
         bestDealsAdapter.onClick = {
+            // Calculate the price after applying the offer percentage (if available)
+            val priceAfterOffer = it.offerPercentage?.getProductPrice(it.price) ?: it.price
+
+            // Create a new product object with the updated price
+            val updatedProduct = it.copy(price = priceAfterOffer)
+
+            // Pass the updated product to the ProductDetailsFragment
             val b = Bundle().apply {
-                putParcelable("product", it)
+                putParcelable("product", updatedProduct)
             }
             findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment, b)
         }
 
-        bestProductAdapter.onClick = {
+        bestProductAdapter.onClick = { product ->
+            // Calculate the price after applying the offer percentage (if available)
+            val priceAfterOffer = product.offerPercentage?.getProductPrice(product.price) ?: product.price
+
+            // Create a new product object with the updated price
+            val updatedProduct = product.copy(price = priceAfterOffer)
+
+            // Pass the updated product to the ProductDetailsFragment
             val b = Bundle().apply {
-                putParcelable("product", it)
+                putParcelable("product", updatedProduct)
             }
             findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment, b)
         }
+
 
         nestedScrollView = binding.nestedScrollMainCategory
         nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
@@ -285,4 +308,6 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
         super.onResume()
         ShowBottomNavigation()
     }
+
+
 }

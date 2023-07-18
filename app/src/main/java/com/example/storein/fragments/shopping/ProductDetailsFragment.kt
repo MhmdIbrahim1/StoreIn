@@ -145,7 +145,7 @@ class ProductDetailsFragment : Fragment() {
         // Populate the UI with product details
         binding.apply {
             tvProductName.text = product.name
-            tvProductPrice.text = "E£ ${product.price}"
+            tvProductPrice.text = "E£ ${formatPrice(product.price)}"
             tvProductDescription.text = product.description
 
             // Hide the labels for color and size if they are not available
@@ -162,7 +162,9 @@ class ProductDetailsFragment : Fragment() {
         product.colors?.let { colorsAdapter.differ.submitList(it) }
         product.sizes?.let { sizesAdapter.differ.submitList(it) }
     }
-
+    fun formatPrice(price: Float): String {
+        return String.format("%.2f", price)
+    }
     private fun setUpSizesRV() {
         binding.rvSizes.apply {
             adapter = sizesAdapter

@@ -81,6 +81,14 @@ class AddressFragment : Fragment() {
             }
 
         }
+
+        binding.buttonDelelte.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        binding.imageAddressClose.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
 }

@@ -18,8 +18,8 @@
 
             <ImageView
                 android:id="@+id/imageAddressClose"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@drawable/ic_close"
                 android:scaleType="centerInside"
                 app:layout_constraintBottom_toBottomOf="parent"

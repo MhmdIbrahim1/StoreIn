@@ -2,9 +2,11 @@ package com.example.storein.di
 
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
+import com.example.storein.firebase.FirebaseCommon
 
 import com.example.storein.utils.Constants.INTRODUCTION_KEY
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import dagger.Module
@@ -30,4 +32,11 @@ object AppModule {
     fun provideIntroductionSP(
         application: Application
     ) = application.getSharedPreferences(INTRODUCTION_KEY, MODE_PRIVATE)
+
+    @Provides
+    @Singleton
+    fun provideFirebaseCommon(
+        firebaseAuth: FirebaseAuth,
+        firestore: FirebaseFirestore
+    ) = FirebaseCommon(firestore, firebaseAuth)
 }

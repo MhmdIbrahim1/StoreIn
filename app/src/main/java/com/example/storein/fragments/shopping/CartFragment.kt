@@ -109,6 +109,10 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
                 }
             }
         }
+
+        bindind.imageCloseCart.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun showOtherViews() {

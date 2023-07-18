@@ -12,6 +12,7 @@ import com.example.storein.data.CartProduct
 import com.example.storein.data.Product
 import com.example.storein.databinding.CartProductItemBinding
 import com.example.storein.databinding.SpecialRvItemBinding
+import com.example.storein.helper.getProductPrice
 
 class CartProductAdapter :
     RecyclerView.Adapter<CartProductAdapter.CartProductViewHolder>() {
@@ -25,20 +26,19 @@ class CartProductAdapter :
                     error(com.example.storein.R.drawable.error_placeholder)
                 }
                 tvProductCartName.text = cartProduct.product.name
-                tvQuantityCartProduct.text = cartProduct.quantity.toString()
-                cartProduct.product.offerPercentage?.let {
-                    val remainingPercentage = 1f - it
-                    val priceAfterDiscount = cartProduct.product.price * remainingPercentage
-                    tvPriceCartProduct.text = "E£ ${String.format("%.2f", priceAfterDiscount)}"
+                tvCartProductQuantity.text = cartProduct.quantity.toString()
 
-                    imageCartProductColor.setImageDrawable(
-                        ColorDrawable(
-                            cartProduct.selectedColor ?: Color.TRANSPARENT
-                        )
+                val priceAfterPercentage =
+                    cartProduct.product.offerPercentage.getProductPrice(cartProduct.product.price)
+                tvProductCartPrice.text = "E£ ${String.format("%.2f", priceAfterPercentage)}"
+
+                imageCartProductColor.setImageDrawable(
+                    ColorDrawable(
+                        cartProduct.selectedColor ?: Color.TRANSPARENT
                     )
-                    tvCartProductSize.text = cartProduct.selectedSize
-                        ?: "N/A".also { imageCartProductSize.setImageDrawable(ColorDrawable(Color.TRANSPARENT)) }
-                }
+                )
+                tvCartProductSize.text = cartProduct.selectedSize
+                    ?: "N/A".also { imageCartProductSize.setImageDrawable(ColorDrawable(Color.TRANSPARENT)) }
             }
         }
     }
@@ -78,10 +78,10 @@ class CartProductAdapter :
         holder.itemView.setOnClickListener {
             onProductClick?.invoke(cartProduct)
         }
-        holder.binding.plusIcon.setOnClickListener {
+        holder.binding.imagePlus.setOnClickListener {
             onPlusClick?.invoke(cartProduct)
         }
-        holder.binding.minusIcon.setOnClickListener {
+        holder.binding.imageMinus.setOnClickListener {
             onMinusClick?.invoke(cartProduct)
         }
     }

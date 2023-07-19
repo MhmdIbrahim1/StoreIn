@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -8,8 +7,8 @@
         android:id="@+id/toolbarAddresses"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/guideline2"
-        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintEnd_toEndOf="@id/rightGuideline"
+        app:layout_constraintStart_toStartOf="@id/leftGuideline"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,15 +17,14 @@
 
             <ImageView
                 android:id="@+id/imageAddressClose"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/ic_close"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:scaleType="centerInside"
+                android:src="@drawable/ic_close"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="@color/black" />
-
 
             <TextView
                 android:id="@+id/tvPaymentMethods"
@@ -34,15 +32,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:text="Addresses"
-                android:textSize="18sp"
                 android:textColor="@color/black"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageAddressClose"
                 app:layout_constraintStart_toEndOf="@id/imageAddressClose"
                 app:layout_constraintTop_toTopOf="@+id/imageAddressClose" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
-
 
     <View
         android:id="@+id/topLine"
@@ -51,14 +47,15 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/white_background"
         android:backgroundTint="@color/g_blue_gray200"
-        app:layout_constraintEnd_toEndOf="@id/guideline2"
-        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintEnd_toEndOf="@id/rightGuideline"
+        app:layout_constraintStart_toStartOf="@id/leftGuideline"
         app:layout_constraintTop_toBottomOf="@id/toolbarAddresses" />
 
     <EditText
         android:id="@+id/edAddressTitle"
         android:layout_width="0dp"
         android:layout_height="45dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/white_background"
         android:fontFamily="@font/poppins_light"
         android:gravity="start|center_vertical"
@@ -67,15 +64,15 @@
         android:paddingEnd="20dp"
         android:singleLine="true"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/guideline2"
-        app:layout_constraintStart_toStartOf="@id/guideline1"
-        app:layout_constraintTop_toBottomOf="@+id/topLine"
-        android:layout_marginTop="15dp"/>
+        app:layout_constraintEnd_toEndOf="@id/rightGuideline"
+        app:layout_constraintStart_toStartOf="@id/leftGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/topLine" />
 
     <EditText
         android:id="@+id/edFullName"
         android:layout_width="0dp"
         android:layout_height="45dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/white_background"
         android:fontFamily="@font/poppins_light"
         android:gravity="start|center_vertical"
@@ -84,10 +81,9 @@
         android:paddingEnd="20dp"
         android:singleLine="true"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/guideline2"
-        app:layout_constraintStart_toStartOf="@id/guideline1"
-        app:layout_constraintTop_toBottomOf="@+id/edAddressTitle"
-        android:layout_marginTop="15dp"/>
+        app:layout_constraintEnd_toEndOf="@id/rightGuideline"
+        app:layout_constraintStart_toStartOf="@id/leftGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/edAddressTitle" />
 
     <EditText
         android:id="@+id/edStreet"
@@ -102,24 +98,27 @@
         android:paddingEnd="20dp"
         android:singleLine="true"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/guideline2"
-        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintEnd_toEndOf="@id/rightGuideline"
+        app:layout_constraintStart_toStartOf="@id/leftGuideline"
         app:layout_constraintTop_toBottomOf="@id/edFullName" />
 
     <LinearLayout
         android:id="@+id/linear"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@id/rightGuideline"
         app:layout_constraintHorizontal_bias="0.484"
-        app:layout_constraintStart_toStartOf="@id/guideline1"
-        app:layout_constraintTop_toBottomOf="@+id/edPhone"
-        android:orientation="horizontal">
+        app:layout_constraintStart_toStartOf="@id/leftGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/edPhone">
 
         <EditText
             android:id="@+id/edCity"
             android:layout_width="378dp"
             android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
             android:background="@drawable/white_background"
             android:fontFamily="@font/poppins_light"
             android:gravity="start|center_vertical"
@@ -127,15 +126,15 @@
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:singleLine="true"
-            android:textStyle="bold"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="5dp" />
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edState"
             android:layout_width="378dp"
             android:layout_height="45dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
             android:background="@drawable/white_background"
             android:fontFamily="@font/poppins_light"
             android:gravity="start|center_vertical"
@@ -143,19 +142,16 @@
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:singleLine="true"
-            android:textStyle="bold"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:layout_marginStart="5dp"/>
-
+            android:textStyle="bold" />
     </LinearLayout>
+
     <EditText
         android:id="@+id/edPhone"
         android:layout_width="0dp"
         android:layout_height="45dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/white_background"
         android:fontFamily="@font/poppins_light"
-        android:layout_marginTop="10dp"
         android:gravity="start|center_vertical"
         android:hint="Phone"
         android:paddingStart="20dp"
@@ -163,81 +159,74 @@
         android:phoneNumber="true"
         android:singleLine="true"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/guideline1"
+        app:layout_constraintEnd_toStartOf="@+id/rightGuideline"
+        app:layout_constraintStart_toStartOf="@+id/leftGuideline"
         app:layout_constraintTop_toBottomOf="@+id/edStreet" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/guideline2"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@id/guideline1"
-        app:layout_constraintTop_toBottomOf="@id/linear"
-        app:layout_constraintVertical_bias="0.494"
         android:layout_marginTop="45dp"
-        android:orientation="horizontal">
-
-
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@id/rightGuideline"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@id/leftGuideline"
+        app:layout_constraintTop_toBottomOf="@id/linear"
+        app:layout_constraintVertical_bias="0.494">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonDelelte"
             android:layout_width="0dp"
             android:layout_height="40dp"
+            android:layout_marginEnd="5dp"
             android:layout_marginBottom="20dp"
+            android:layout_weight="1"
             android:background="@drawable/white_background"
             android:fontFamily="@font/poppins_thin"
-            android:text="Cancel"
+            android:text="Delete"
             android:textAllCaps="false"
             android:textColor="@color/g_gray700"
             android:textSize="12dp"
-            android:visibility="visible"
-            android:layout_weight="1"
-            android:layout_marginEnd="5dp"
-            />
+            android:visibility="visible" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonSave"
             android:layout_width="0dp"
             android:layout_height="40dp"
+            android:layout_marginStart="5dp"
             android:layout_marginBottom="20dp"
+            android:layout_weight="1"
             android:background="@drawable/blue_background"
             android:fontFamily="@font/poppins_thin"
             android:text="Save"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12dp"
-            android:visibility="visible"
-            android:layout_weight="1"
-            android:layout_marginStart="5dp"
-            />
-
+            android:visibility="visible" />
     </LinearLayout>
-
 
     <ProgressBar
         android:id="@+id/progressbarAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminateTint="@color/g_gray700"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="45dp"
-        android:visibility="gone"/>
+        android:indeterminateTint="@color/g_gray700"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline1"
+        android:id="@+id/leftGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.04136253" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
+        android:id="@+id/rightGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.96" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

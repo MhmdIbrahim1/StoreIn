@@ -65,9 +65,9 @@ class AllOrdersFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-//        binding.imageCloseOrders.setOnClickListener {
-//            findNavController().popBackStack()
-//        }
+        binding.imageCloseOrders.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
     }
 

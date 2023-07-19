@@ -9,7 +9,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         app:cardElevation="1dp"
         app:cardCornerRadius="4dp"
         android:background="@color/g_card_background"
@@ -25,6 +25,7 @@
                 android:id="@+id/img_product"
                 android:layout_width="@dimen/_130sdp"
                 android:layout_height="@dimen/_120sdp"
+                app:layout_constraintDimensionRatio="H,16:9"
                 android:scaleType="fitCenter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -48,6 +49,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_light"
                     android:text="Chair"
+                    android:maxLines="2"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="bold" />

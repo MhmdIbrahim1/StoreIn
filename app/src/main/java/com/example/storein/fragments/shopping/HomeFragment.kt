@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.storein.R
 import com.example.storein.adapters.HomeViewPagerAdapter
 import com.example.storein.databinding.FragmentHomeBinding
@@ -15,6 +17,7 @@ import com.example.storein.fragments.categories.FurnitureFragment
 import com.example.storein.fragments.categories.MainCategoryFragment
 import com.example.storein.fragments.categories.ShoesFragment
 import com.example.storein.fragments.categories.TableFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayoutMediator
 
 class HomeFragment: Fragment(R.layout.fragment_home) {
@@ -31,6 +34,17 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        binding.tvSearch.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+        }
+        binding.imgScan.setOnClickListener {
+            Toast.makeText(requireContext(), "Coming soon", Toast.LENGTH_SHORT).show()
+        }
+        binding.imgMic.setOnClickListener {
+            Toast.makeText(requireContext(), "Coming soon", Toast.LENGTH_SHORT).show()
+        }
 
         val categoriesFragments = arrayListOf<Fragment>(
             MainCategoryFragment(),
@@ -61,5 +75,16 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                 6 -> tab.text = "Furniture"
             }
         }.attach()
+    }
+    override fun onResume() {
+        super.onResume()
+        val bottomNavigation =
+            requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigation.visibility = View.VISIBLE
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
     }
 }

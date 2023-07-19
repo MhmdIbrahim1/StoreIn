@@ -10,5 +10,9 @@
     <string name="email">Email</string>
     <string name="don_t_have_an_account_register">Don\'t have an account? Register</string>
     <string name="web_client_id">593335904452-gd4fi93k2oc8e4m6j4ajsr85rc2f798b.apps.googleusercontent.com</string>
+    <string name="g_categories">Categories</string>
+    <string name="g_cancel">Cancel</string>
+    <string name="g_search_now">Search Now\n</string>
+    <string name="g_coming_soon">CommingSoon!</string>
 
 </resources>

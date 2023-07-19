@@ -9,6 +9,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="g_pink">#FF9999</color>
+    <color name="g_icon_tint">#97AABD</color>
+    <color name="g_hint">#666666</color>
     <color name="g_gray700">#666666</color>
     <color name="g_black">#171717</color>
     <color name="g_blue">#000DAE</color>
@@ -24,7 +27,7 @@
     <color name="g_gray500">#969899</color>
     <color name="g_orange_yellow">#F8BA00</color>
     <color name="g_green">#11FF00</color>
-
+    <color name="g_text_hint">#969899</color>
     <color name="g_light_gray">#F5F8FA</color>
 
 </resources>

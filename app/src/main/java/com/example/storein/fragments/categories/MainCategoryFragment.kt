@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.storein.R
 import com.example.storein.adapters.BestDealsAdapter
 import com.example.storein.adapters.BestProductAdapter
@@ -52,6 +53,9 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
         setSpecialProductRv()
         setUpBestDealsRv()
         setUpBestProductRv()
+
+        binding
+
 
         specialProductAdapter.onClick = {
             // Calculate the price after applying the offer percentage (if available)
@@ -249,12 +253,12 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
     private fun setUpBestProductRv() {
         bestProductAdapter = BestProductAdapter()
         binding.rvBestProducts.apply {
-            layoutManager = GridLayoutManager(
-                requireContext(),
+           val  layoutManager = StaggeredGridLayoutManager(
                 2,
-                GridLayoutManager.VERTICAL,
-                false
+                StaggeredGridLayoutManager.VERTICAL,
             )
+            layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+            binding.rvBestProducts.layoutManager = layoutManager
             adapter = bestProductAdapter
         }
     }

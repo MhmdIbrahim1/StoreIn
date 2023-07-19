@@ -19,11 +19,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.storein.R
 import com.example.storein.activites.ShoppingActivity
 import com.example.storein.adapters.BestProductAdapter
 import com.example.storein.adapters.SearchRecyclerAdapter
 import com.example.storein.databinding.FragmentSearchBinding
+import com.example.storein.helper.getProductPrice
 import com.example.storein.utils.NetworkResult
 import com.example.storein.viewmodels.MainCategoryViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -103,8 +105,15 @@ class SearchFragment : Fragment() {
 
     private fun onSearchTextClick() {
         searchAdapter.onItemClick = { product ->
-            val bundle = Bundle()
-            bundle.putParcelable("product", product)
+
+            // Calculate the price after applying the offer percentage (if available)
+            val priceAfterOffer = product.offerPercentage?.getProductPrice(product.price) ?: product.price
+            // Create a new product object with the updated price
+            val updatedProduct = product.copy(price = priceAfterOffer)
+
+            val b = Bundle().apply {
+                putParcelable("product", updatedProduct)
+            }
 
             /**
              * Hide the keyboard
@@ -114,10 +123,7 @@ class SearchFragment : Fragment() {
                 activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
             imm!!.hideSoftInputFromWindow(requireView().windowToken, 0)
 
-            findNavController().navigate(
-                R.id.action_searchFragment_to_productDetailsFragment,
-                bundle
-            )
+            findNavController().navigate(R.id.action_searchFragment_to_productDetailsFragment, b)
 
         }
     }
@@ -125,8 +131,13 @@ class SearchFragment : Fragment() {
     private fun setupSearchRecyclerView() {
         searchAdapter = SearchRecyclerAdapter()
         binding.rvSearch.apply {
+            val  layoutManager = StaggeredGridLayoutManager(
+                2,
+                StaggeredGridLayoutManager.VERTICAL,
+            )
+            layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+            binding.rvSearch.layoutManager = layoutManager
             adapter = searchAdapter
-            layoutManager = LinearLayoutManager(context)
         }
     }
 

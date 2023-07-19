@@ -114,7 +114,6 @@ class MainCategoryViewModel @Inject constructor(
             .orderBy("lowercaseName")
             .startAt(normalizedQuery)
             .endAt("${normalizedQuery}\uf8ff")
-            .limit(5)
             .get()
     }
 

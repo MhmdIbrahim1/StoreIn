@@ -74,10 +74,13 @@
             android:id="@+id/tvProductDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="12dp"
             android:text="Product Description"
             android:textColor="@color/g_gray700"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_11ssp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/llProductDetails"
             app:layout_constraintStart_toStartOf="@id/llProductDetails"
             app:layout_constraintTop_toBottomOf="@id/llProductDetails" />
 

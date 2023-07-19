@@ -75,5 +75,8 @@
         <argument
             android:name="products"
             app:argType="com.example.storein.data.CartProduct[]" />
+        <action
+            android:id="@+id/action_billingFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
     </fragment>
 </navigation>

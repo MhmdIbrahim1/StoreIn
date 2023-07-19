@@ -9,3 +9,9 @@ fun Float?.getProductPrice(price: Float): Float{
 
     return priceAfterOffer
 }
+
+fun Float?.formatPrice(): String{
+    if (this == null)
+        return "0.0"
+    return String.format("%.2f", this)
+}

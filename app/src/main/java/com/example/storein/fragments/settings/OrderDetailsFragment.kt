@@ -13,6 +13,7 @@ import com.example.storein.data.order.OrderStatus
 import com.example.storein.data.order.getOrderStatus
 import com.example.storein.databinding.FragmentOrderDetailBinding
 import com.example.storein.databinding.FragmentOrdersBinding
+import com.example.storein.helper.formatPrice
 import com.example.storein.utils.VerticalItemDecoration
 
 class OrderDetailsFragment: Fragment() {
@@ -61,7 +62,7 @@ class OrderDetailsFragment: Fragment() {
             tvFullName.text = order.adddress.fullName
             tvAddress.text = "${order.adddress.street} ${order.adddress.city} ${order.adddress.state}"
             tvPhoneNumber.text = order.adddress.phone
-            tvTotalPrice.text = "E£ ${order.totalPrice}"
+            tvTotalPrice.text = "E£ ${order.totalPrice.formatPrice()}"
 
         }
 

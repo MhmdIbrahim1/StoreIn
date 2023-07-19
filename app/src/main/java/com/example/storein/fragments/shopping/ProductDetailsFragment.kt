@@ -17,9 +17,11 @@ import com.example.storein.adapters.SizesAdapter
 import com.example.storein.adapters.ViewPager2Images
 import com.example.storein.data.CartProduct
 import com.example.storein.databinding.FragmentProductDetailsBinding
+import com.example.storein.helper.formatPrice
 import com.example.storein.utils.HideBottomNavigation
 import com.example.storein.utils.NetworkResult
 import com.example.storein.viewmodels.DetailsViewModel
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -145,7 +147,7 @@ class ProductDetailsFragment : Fragment() {
         // Populate the UI with product details
         binding.apply {
             tvProductName.text = product.name
-            tvProductPrice.text = "E£ ${formatPrice(product.price)}"
+            tvProductPrice.text = "E£ ${(product.price.formatPrice())}"
             tvProductDescription.text = product.description
 
             // Hide the labels for color and size if they are not available
@@ -161,10 +163,14 @@ class ProductDetailsFragment : Fragment() {
         viewPagerAdapter.differ.submitList(product.images)
         product.colors?.let { colorsAdapter.differ.submitList(it) }
         product.sizes?.let { sizesAdapter.differ.submitList(it) }
+
+        // Set up TabLayout with the ViewPager2
+        binding.apply {
+            viewPagerProductImages.adapter = viewPagerAdapter
+            TabLayoutMediator(tabLayoutImageIndicator, viewPagerProductImages) { _, _ -> }.attach()
+        }
     }
-    fun formatPrice(price: Float): String {
-        return String.format("%.2f", price)
-    }
+
     private fun setUpSizesRV() {
         binding.rvSizes.apply {
             adapter = sizesAdapter

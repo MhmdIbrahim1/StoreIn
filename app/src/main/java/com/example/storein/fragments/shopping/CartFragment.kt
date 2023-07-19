@@ -15,6 +15,7 @@ import com.example.storein.R
 import com.example.storein.adapters.CartProductAdapter
 import com.example.storein.databinding.FragmentCartBinding
 import com.example.storein.firebase.FirebaseCommon
+import com.example.storein.helper.formatPrice
 import com.example.storein.utils.NetworkResult
 import com.example.storein.utils.VerticalItemDecoration
 import com.example.storein.viewmodels.CartViewModel
@@ -44,7 +45,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             viewModel.productsPrice.collectLatest { price ->
                 price?.let {
                     totalPrice = it
-                    bindind.tvTotalPrice.text = "E£ $price"
+                    bindind.tvTotalPrice.text = "E£ ${price.formatPrice()}"
                 }
 
             }

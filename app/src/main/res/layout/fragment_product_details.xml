@@ -91,12 +91,13 @@
 
         <TextView
             android:id="@+id/tvProductDescription"
-            android:layout_width="124dp"
-            android:layout_height="27dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:text="Product Description"
             android:textColor="@color/g_gray700"
             android:textSize="@dimen/_11ssp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/llProductDetails"
             app:layout_constraintStart_toStartOf="@id/llProductDetails"
             app:layout_constraintTop_toBottomOf="@id/llProductDetails" />
 

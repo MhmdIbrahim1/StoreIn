@@ -27,7 +27,7 @@ class LoginViewModel @Inject constructor(
 
 
     fun login(email: String, password: String) {
-        if(email.isEmpty() || password.isEmpty()) {
+        if (email.isEmpty() || password.isEmpty()) {
             viewModelScope.launch {
                 _login.emit(NetworkResult.Error("Email or password cannot be empty"))
             }
@@ -72,34 +72,55 @@ class LoginViewModel @Inject constructor(
             .addOnSuccessListener { authResult ->
                 viewModelScope.launch {
                     authResult.user?.let { user ->
-                        val userData = hashMapOf(
-                            "uid" to user.uid,
-                            "email" to user.email,
-                            "displayName" to user.displayName,
-                            "photoUrl" to user.photoUrl.toString()
-                        )
+                        val userDocumentRef = firestore.collection("users").document(user.uid)
 
-                        firestore.collection("users")
-                            .document(user.uid)
-                            .set(userData)
-                            .addOnSuccessListener {
-                                viewModelScope.launch {
-                                    _login.emit(NetworkResult.Success("Login Success"))
+                        userDocumentRef.get().addOnSuccessListener { documentSnapshot ->
+                            if (documentSnapshot.exists()) {
+                                // User document already exists, update display name and photo URL
+                                userDocumentRef.update(
+                                    "displayName", user.displayName,
+                                    "photoUrl", user.photoUrl.toString()
+                                ).addOnSuccessListener {
+                                    viewModelScope.launch { _login.emit(NetworkResult.Success("Login Success")) }
+                                }.addOnFailureListener { error ->
+                                    viewModelScope.launch {
+                                        _login.emit(NetworkResult.Error("Failed to update user document: ${error.message}"))
+                                    }
                                 }
+                            } else {
+                                // User document doesn't exist, create a new one
+                                val userData = hashMapOf(
+                                    "uid" to user.uid,
+                                    "email" to user.email,
+                                    "displayName" to user.displayName,
+                                    "photoUrl" to user.photoUrl.toString()
+                                )
+
+                                userDocumentRef.set(userData)
+                                    .addOnSuccessListener {
+                                        viewModelScope.launch { _login.emit(NetworkResult.Success("Login Success")) }
+
+                                    }
+                                    .addOnFailureListener { error ->
+                                        viewModelScope.launch {
+                                            _login.emit(NetworkResult.Error("Failed to create user document: ${error.message}"))
+                                        }
+                                    }
                             }
-                            .addOnFailureListener {
-                                viewModelScope.launch {
-                                    _login.emit(NetworkResult.Error("Failed to add user data"))
-                                }
+                        }.addOnFailureListener { error ->
+                            viewModelScope.launch {
+                                _login.emit(NetworkResult.Error("Failed to check user document: ${error.message}"))
                             }
+                        }
                     }
                 }
             }
-            .addOnFailureListener {
+            .addOnFailureListener { error ->
                 viewModelScope.launch {
-                    _login.emit(NetworkResult.Error(it.message.toString()))
+                    _login.emit(NetworkResult.Error("Google sign-in failed: ${error.message}"))
                 }
             }
     }
+
 
 }

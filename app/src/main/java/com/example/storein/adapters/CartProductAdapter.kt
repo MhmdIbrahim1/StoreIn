@@ -28,9 +28,7 @@ class CartProductAdapter :
                 tvProductCartName.text = cartProduct.product.name
                 tvCartProductQuantity.text = cartProduct.quantity.toString()
 
-                val priceAfterPercentage =
-                    cartProduct.product.offerPercentage.getProductPrice(cartProduct.product.price)
-                tvProductCartPrice.text = "E£ ${String.format("%.2f", priceAfterPercentage)}"
+                tvProductCartPrice.text = "E£ ${String.format("%.2f", cartProduct.product.price)}"
 
                 imageCartProductColor.setImageDrawable(
                     ColorDrawable(

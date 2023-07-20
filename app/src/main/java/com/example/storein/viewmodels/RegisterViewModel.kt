@@ -38,7 +38,7 @@ class RegisterViewModel @Inject constructor(
             runBlocking {
                 _register.emit(NetworkResult.Loading())
             }
-            firebaseAuth.createUserWithEmailAndPassword(user.email, password)
+            firebaseAuth.createUserWithEmailAndPassword(user.email!!, password)
                 .addOnSuccessListener {
                     it.user?.let { firebaseUser ->
                         saveUserInfo(firebaseUser.uid, user)
@@ -48,7 +48,7 @@ class RegisterViewModel @Inject constructor(
                 }
         } else {
             val registerFailedState = RegisterFailedState(
-                validateEmail(user.email),
+                validateEmail(user.email!!),
                 validatePassword(password)
             )
             viewModelScope.launch {
@@ -70,7 +70,7 @@ class RegisterViewModel @Inject constructor(
     }
 
     private fun checkValidation(user: User, password: String): Boolean {
-        val emailValidation = validateEmail(user.email)
+        val emailValidation = validateEmail(user.email!!)
         val passwordValidation = validatePassword(password)
         return emailValidation is RegisterValidation.Success && passwordValidation is RegisterValidation.Success
     }

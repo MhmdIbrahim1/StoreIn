@@ -30,7 +30,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         bindind = FragmentCartBinding.inflate(inflater)
         return bindind.root
     }

@@ -11,6 +11,7 @@ data class Address(
     val phone: String,
     val city: String,
     val state: String,
+    val documentId: String = ""
 ):Parcelable{
     constructor():this("","","","","","")
 }

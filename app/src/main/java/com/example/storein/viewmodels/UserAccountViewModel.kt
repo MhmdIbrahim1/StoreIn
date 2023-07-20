@@ -4,6 +4,7 @@ import android.app.Application
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.storein.MyApplication
@@ -51,8 +52,16 @@ class UserAccountViewModel @Inject constructor(
             .addOnSuccessListener {
                 val user = it.toObject(User::class.java)
                 user?.let {
-                    viewModelScope.launch {
-                        _user.emit(NetworkResult.Success(it))
+                    // Log the User object received from Firestore
+                    Log.d("UserAccountViewModel", "User from Firestore: $it")
+                    if (it.firstName != null && it.lastName != null && it.email != null) {
+                        viewModelScope.launch {
+                            _user.emit(NetworkResult.Success(it))
+                        }
+                    } else {
+                        viewModelScope.launch {
+                            _user.emit(NetworkResult.Error("User data is incomplete"))
+                        }
                     }
                 }
             }.addOnFailureListener {
@@ -63,9 +72,11 @@ class UserAccountViewModel @Inject constructor(
     }
 
     fun updateUser(user: User, imageUri: Uri?) {
-        val areInputsValid = validateEmail(user.email) is RegisterValidation.Success
-                && user.firstName.trim().isNotEmpty()
-                && user.lastName.trim().isNotEmpty()
+        // Log the User object before updating
+        Log.d("UserAccountViewModel", "User before updating: $user")
+        val areInputsValid = user.email?.let { validateEmail(it) } is RegisterValidation.Success
+                && user.firstName?.trim()?.isNotEmpty() ?: false
+                && user.lastName?.trim()?.isNotEmpty()?: false
 
         if (!areInputsValid) {
             viewModelScope.launch {
@@ -114,6 +125,8 @@ class UserAccountViewModel @Inject constructor(
             val documentRef = firestore.collection("users").document(auth.uid!!)
             if (shouldRetrievedOldImage) {
                 val currentUser = transaction.get(documentRef).toObject(User::class.java)
+                // Log the User object retrieved in the transaction
+                Log.d("UserAccountViewModel", "User in transaction: $currentUser")
                 val newUser = user.copy(imagePath = currentUser?.imagePath ?: "")
                 transaction.set(documentRef, newUser)
             } else {

@@ -8,6 +8,8 @@ import javax.inject.Inject
 import com.example.storein.data.Address
 import com.example.storein.utils.NetworkResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentId
+import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -23,17 +25,20 @@ class AddressViewModel @Inject constructor(
     private val _address = MutableStateFlow<NetworkResult<Address>>(NetworkResult.UnSpecified())
     val address = _address.asStateFlow()
 
+    private val _deleteStatus = MutableStateFlow<NetworkResult<Unit>>(NetworkResult.UnSpecified())
+    val deleteStatus = _deleteStatus.asStateFlow()
+
+
+
     private val _error = MutableSharedFlow<String>()
     val error = _error.asSharedFlow()
 
     fun addAddress(address: Address) {
-
-
         val validateInputs = validateInputs(address)
         if (validateInputs) {
             viewModelScope.launch { _address.emit(NetworkResult.Loading()) }
-            firestore.collection("users").document(auth.uid!!).collection("address")
-                .document().set(address)
+            val newDocRef = firestore.collection("users").document(auth.uid!!).collection("address").document()
+               newDocRef.set(address.copy(documentId = newDocRef.id))
                 .addOnSuccessListener {
                     viewModelScope.launch {
                         _address.emit(NetworkResult.Success(address))
@@ -45,12 +50,54 @@ class AddressViewModel @Inject constructor(
                     }
                 }
 
-        }else{
+        } else {
             viewModelScope.launch {
                 _error.emit("Please fill all the fields")
             }
         }
     }
+
+    fun updateAddress(address: Address) {
+        val validateInputs = validateInputs(address)
+        if (validateInputs) {
+            viewModelScope.launch { _address.emit(NetworkResult.Loading()) }
+            firestore.collection("users").document(auth.uid!!)
+                .collection("address").document(address.documentId)
+                .set(address, SetOptions.merge()) /// use SetOptions.merge() to update the document
+                .addOnSuccessListener {
+                    viewModelScope.launch {
+                        _address.emit(NetworkResult.Success(address))
+                    }
+                }
+                .addOnFailureListener {
+                    viewModelScope.launch {
+                        _address.emit(NetworkResult.Error(it.message.toString()))
+                    }
+                }
+        } else {
+            viewModelScope.launch {
+                _error.emit("Please fill all the fields")
+            }
+        }
+    }
+
+    fun deleteAddress(address: Address) {
+        viewModelScope.launch { _deleteStatus.emit(NetworkResult.Loading()) }
+        firestore.collection("users").document(auth.uid!!)
+            .collection("address").document(address.documentId)
+            .delete()
+            .addOnSuccessListener {
+                viewModelScope.launch {
+                    _deleteStatus.emit(NetworkResult.Success(Unit))
+                }
+            }
+            .addOnFailureListener {
+                viewModelScope.launch {
+                    _deleteStatus.emit(NetworkResult.Error(it.message.toString()))
+                }
+            }
+    }
+
 
     private fun validateInputs(address: Address): Boolean {
         return address.title.trim().isNotEmpty() &&

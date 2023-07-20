@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,7 +56,6 @@ class UserAccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         lifecycleScope.launchWhenStarted {
             viewModel.user.collectLatest {
                 when (it) {
@@ -122,10 +122,12 @@ class UserAccountFragment : Fragment() {
 
     private fun showUserInformation(data: User) {
         binding.apply {
-            Glide.with(this@UserAccountFragment).load(data.imagePath).error(ColorDrawable(Color.BLACK)).into(imageUser)
+            Glide.with(this@UserAccountFragment).load(data.imagePath).
+            error(ColorDrawable(Color.BLACK)).into(imageUser)
             edFirstName.setText(data.firstName)
             edLastName.setText(data.lastName)
             edEmail.setText(data.email)
+            Log.d("UserAccountFragment", data.toString())
         }
     }
 

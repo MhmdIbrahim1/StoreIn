@@ -18,16 +18,16 @@ class ColorsAdapter : RecyclerView.Adapter<ColorsAdapter.ColorsViewHolder>() {
     inner class ColorsViewHolder(private val binding: ColorRvItemBinding) :
         ViewHolder(binding.root) {
         fun bind(color: Int, position: Int) {
+
             val borderSize = 3 // in pixels, you can adjust as necessary
             val borderColor = Color.BLACK // color of your choice
             val borderDrawable = GradientDrawable()
             borderDrawable.shape = GradientDrawable.OVAL // Make the shape a circle
             borderDrawable.setColor(color) // set the color of the item
             borderDrawable.setStroke(borderSize, borderColor)
-
             val imageDrawable = ColorDrawable(color)
-            binding.imageColor.background = borderDrawable
             binding.imageColor.setImageDrawable(imageDrawable)
+            binding.imageColor.background = borderDrawable
             if (position == selectedPosition) { //Color is selected
                 binding.apply {
                     imageShadow.visibility = View.VISIBLE

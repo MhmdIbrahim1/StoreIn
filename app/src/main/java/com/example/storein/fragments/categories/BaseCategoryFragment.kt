@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.storein.R
 import com.example.storein.adapters.BestProductAdapter
 import com.example.storein.databinding.FragmentBaseCategoryBinding
+import com.example.storein.fragments.shopping.HomeFragmentDirections
 import com.example.storein.helper.getProductPrice
 import com.example.storein.utils.ShowBottomNavigation
 
@@ -37,29 +38,30 @@ open class BaseCategoryFragment : Fragment(R.layout.fragment_base_category) {
 
         bestProductAdapter.onClick = {
 
-            // Calculate the price after applying the offer percentage (if available)
-            val priceAfterOffer = it.offerPercentage?.getProductPrice(it.price) ?: it.price
+            if (isAdded) {
+                // Calculate the price after applying the offer percentage (if available)
+                val priceAfterOffer = it.offerPercentage?.getProductPrice(it.price) ?: it.price
 
-            // Create a new product object with the updated price
-            val updatedProduct = it.copy(price = priceAfterOffer)
+                // Create a new product object with the updated price
+                val updatedProduct = it.copy(price = priceAfterOffer)
 
-            val b = Bundle().apply {
-                putParcelable("product", updatedProduct)
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToProductDetailsFragment(updatedProduct)
+                findNavController().navigate(action)
             }
-            findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment, b)
         }
 
         offerAdapter.onClick = {
+            if (isAdded) {
+                // Calculate the price after applying the offer percentage (if available)
+                val priceAfterOffer = it.offerPercentage?.getProductPrice(it.price) ?: it.price
 
-            // Calculate the price after applying the offer percentage (if available)
-            val priceAfterOffer = it.offerPercentage?.getProductPrice(it.price) ?: it.price
-
-            // Create a new product object with the updated price
-            val updatedProduct = it.copy(price = priceAfterOffer)
-            val b = Bundle().apply {
-                putParcelable("product", updatedProduct)
+                // Create a new product object with the updated price
+                val updatedProduct = it.copy(price = priceAfterOffer)
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToProductDetailsFragment(updatedProduct)
+                findNavController().navigate(action)
             }
-            findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment, b)
         }
 
         binding.rvOffer.addOnScrollListener(object : RecyclerView.OnScrollListener() {

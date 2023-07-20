@@ -19,7 +19,9 @@ import com.example.storein.R
 import com.example.storein.adapters.BestDealsAdapter
 import com.example.storein.adapters.BestProductAdapter
 import com.example.storein.adapters.SpecialProductAdapter
+import com.example.storein.data.Product
 import com.example.storein.databinding.FragmentMainCategoryBinding
+import com.example.storein.fragments.shopping.HomeFragmentDirections
 import com.example.storein.helper.getProductPrice
 import com.example.storein.utils.NetworkResult
 import com.example.storein.utils.ShowBottomNavigation
@@ -54,49 +56,47 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
         setUpBestDealsRv()
         setUpBestProductRv()
 
-        binding
-
-
         specialProductAdapter.onClick = {
-            // Calculate the price after applying the offer percentage (if available)
-            val priceAfterOffer = it.offerPercentage?.getProductPrice(it.price) ?: it.price
+            if (isAdded) {
+                // Calculate the price after applying the offer percentage (if available)
+                val priceAfterOffer = it.offerPercentage?.getProductPrice(it.price) ?: it.price
 
-            // Create a new product object with the updated price
-            val updatedProduct = it.copy(price = priceAfterOffer)
+                // Create a new product object with the updated price
+                val updatedProduct = it.copy(price = priceAfterOffer)
 
-            // Pass the updated product to the ProductDetailsFragment
-            val b = Bundle().apply {
-                putParcelable("product", updatedProduct)
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToProductDetailsFragment(updatedProduct)
+                findNavController().navigate(action)
             }
-            findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment, b)
         }
 
         bestDealsAdapter.onClick = {
-            // Calculate the price after applying the offer percentage (if available)
-            val priceAfterOffer = it.offerPercentage?.getProductPrice(it.price) ?: it.price
+            if (isAdded) {
+                // Calculate the price after applying the offer percentage (if available)
+                val priceAfterOffer = it.offerPercentage?.getProductPrice(it.price) ?: it.price
 
-            // Create a new product object with the updated price
-            val updatedProduct = it.copy(price = priceAfterOffer)
+                // Create a new product object with the updated price
+                val updatedProduct = it.copy(price = priceAfterOffer)
 
-            // Pass the updated product to the ProductDetailsFragment
-            val b = Bundle().apply {
-                putParcelable("product", updatedProduct)
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToProductDetailsFragment(updatedProduct)
+                findNavController().navigate(action)
             }
-            findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment, b)
         }
 
         bestProductAdapter.onClick = { product ->
-            // Calculate the price after applying the offer percentage (if available)
-            val priceAfterOffer = product.offerPercentage?.getProductPrice(product.price) ?: product.price
+            if   (isAdded) {
+                // Calculate the price after applying the offer percentage (if available)
+                val priceAfterOffer =
+                    product.offerPercentage?.getProductPrice(product.price) ?: product.price
 
-            // Create a new product object with the updated price
-            val updatedProduct = product.copy(price = priceAfterOffer)
+                // Create a new product object with the updated price
+                val updatedProduct = product.copy(price = priceAfterOffer)
 
-            // Pass the updated product to the ProductDetailsFragment
-            val b = Bundle().apply {
-                putParcelable("product", updatedProduct)
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToProductDetailsFragment(updatedProduct)
+                findNavController().navigate(action)
             }
-            findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment, b)
         }
 
 
@@ -130,12 +130,9 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
         })
 
 
-
-
         observeSpecialProducts()
         observeBestDeals()
         observeBestProducts()
-
 
     }
 
@@ -253,11 +250,12 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
     private fun setUpBestProductRv() {
         bestProductAdapter = BestProductAdapter()
         binding.rvBestProducts.apply {
-           val  layoutManager = StaggeredGridLayoutManager(
+            val layoutManager = StaggeredGridLayoutManager(
                 2,
                 StaggeredGridLayoutManager.VERTICAL,
             )
-            layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+            layoutManager.gapStrategy =
+                StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
             binding.rvBestProducts.layoutManager = layoutManager
             adapter = bestProductAdapter
         }

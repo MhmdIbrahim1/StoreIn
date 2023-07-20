@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.storein.R
 import com.example.storein.adapters.BestProductAdapter
 import com.example.storein.databinding.FragmentBaseCategoryBinding
+import com.example.storein.helper.getProductPrice
 import com.example.storein.utils.ShowBottomNavigation
 
 open class BaseCategoryFragment : Fragment(R.layout.fragment_base_category) {
@@ -35,24 +36,37 @@ open class BaseCategoryFragment : Fragment(R.layout.fragment_base_category) {
         setUpBestProductRv()
 
         bestProductAdapter.onClick = {
+
+            // Calculate the price after applying the offer percentage (if available)
+            val priceAfterOffer = it.offerPercentage?.getProductPrice(it.price) ?: it.price
+
+            // Create a new product object with the updated price
+            val updatedProduct = it.copy(price = priceAfterOffer)
+
             val b = Bundle().apply {
-                putParcelable("product", it)
+                putParcelable("product", updatedProduct)
             }
             findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment, b)
         }
 
         offerAdapter.onClick = {
+
+            // Calculate the price after applying the offer percentage (if available)
+            val priceAfterOffer = it.offerPercentage?.getProductPrice(it.price) ?: it.price
+
+            // Create a new product object with the updated price
+            val updatedProduct = it.copy(price = priceAfterOffer)
             val b = Bundle().apply {
-                putParcelable("product", it)
+                putParcelable("product", updatedProduct)
             }
             findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment, b)
         }
 
-        binding.rvOffer.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+        binding.rvOffer.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
-                if (!recyclerView.canScrollHorizontally(1) && dx != 0){
+                if (!recyclerView.canScrollHorizontally(1) && dx != 0) {
                     onOfferPagingRequest()
                 }
             }

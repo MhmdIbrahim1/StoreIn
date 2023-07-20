@@ -22,7 +22,7 @@ class ShoesFragment : BaseCategoryFragment() {
     lateinit var firestore: FirebaseFirestore
 
 
-    val viewMode by viewModels<CategoryViewModel> {
+    private val viewMode by viewModels<CategoryViewModel> {
         BaseCategoryViewModelFactory(firestore, Category.Shoes)
     }
 

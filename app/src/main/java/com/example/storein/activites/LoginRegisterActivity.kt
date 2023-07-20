@@ -12,17 +12,9 @@ class LoginRegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_register)
 
-        // Add log to check if the activity is created
-        Log.d("LoginRegisterActivity", "onCreate() called")
-
     }
-
-
     override fun onBackPressed() {
-        // Add log to check if back button press is detected
-        Log.d("LoginRegisterActivity", "onBackPressed() called")
-
-        // Rest of your code...
+        // This will close the app when back button is pressed from LoginRegisterActivity
+        finishAffinity()
     }
-
 }

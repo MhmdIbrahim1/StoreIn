@@ -53,7 +53,7 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
@@ -70,13 +70,6 @@ class ProfileFragment : Fragment() {
             val action =
                 ProfileFragmentDirections.actionProfileFragmentToBillingFragment(0f, emptyArray(), false)
             findNavController().navigate(action)
-        }
-
-        binding.linearLogOut.setOnClickListener {
-            viewModel.logOut()
-            val intent = Intent(requireContext(), LoginRegisterActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()
         }
 
         binding.linearTrackOrder.setOnClickListener {
@@ -117,8 +110,9 @@ class ProfileFragment : Fragment() {
         binding.linearLogOut.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             val intent = Intent(context, LoginRegisterActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
+            requireActivity().finish()
         }
     }
     override fun onResume() {

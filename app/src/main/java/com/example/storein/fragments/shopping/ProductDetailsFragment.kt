@@ -65,6 +65,8 @@ class ProductDetailsFragment : Fragment() {
         setUpSizesRV()
         setUpColorsRV()
         setUpViewPager2()
+        observeAddToCart()
+
 
         // Set up click listeners
         binding.imgClose.setOnClickListener {
@@ -120,29 +122,7 @@ class ProductDetailsFragment : Fragment() {
             }
         }
 
-        // Observe the "addToCart"  for changes and react accordingly
-        lifecycleScope.launchWhenStarted {
-            viewModel.addToCart.collect { result ->
-                when (result) {
-                    is NetworkResult.Loading -> {
-                        // Show loading animation when adding to cart
-                        binding.btnAddToCart.startAnimation()
-                    }
-                    is NetworkResult.Success -> {
-                        // Show success animation and a toast message when the product is added to cart successfully
-                        binding.btnAddToCart.revertAnimation()
-                        binding.btnAddToCart.setBackgroundColor(resources.getColor(R.color.black))
-                        Toast.makeText(requireContext(), "Added to cart", Toast.LENGTH_SHORT).show()
-                    }
-                    is NetworkResult.Error -> {
-                        // Show error message in a toast if there's an issue adding the product to cart
-                        binding.btnAddToCart.revertAnimation()
-                        Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
-                    }
-                    else -> Unit
-                }
-            }
-        }
+
 
         // Populate the UI with product details
         binding.apply {
@@ -170,6 +150,34 @@ class ProductDetailsFragment : Fragment() {
             TabLayoutMediator(tabLayoutImageIndicator, viewPagerProductImages) { _, _ -> }.attach()
         }
     }
+
+
+    fun observeAddToCart(){
+        // Observe the "addToCart"  for changes and react accordingly
+        lifecycleScope.launchWhenStarted {
+            viewModel.addToCart.collect { result ->
+                when (result) {
+                    is NetworkResult.Loading -> {
+                        // Show loading animation when adding to cart
+                        binding.btnAddToCart.startAnimation()
+                    }
+                    is NetworkResult.Success -> {
+                        // Show success animation and a toast message when the product is added to cart successfully
+                        binding.btnAddToCart.revertAnimation()
+                        binding.btnAddToCart.setBackgroundColor(resources.getColor(R.color.black))
+                        Toast.makeText(requireContext(), "Added to cart", Toast.LENGTH_SHORT).show()
+                    }
+                    is NetworkResult.Error -> {
+                        // Show error message in a toast if there's an issue adding the product to cart
+                        binding.btnAddToCart.revertAnimation()
+                        Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
+                    }
+                    else -> Unit
+                }
+            }
+        }
+    }
+
 
     private fun setUpSizesRV() {
         binding.rvSizes.apply {

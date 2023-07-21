@@ -34,7 +34,7 @@
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabLayoutImageIndicator"
                 android:layout_width="match_parent"
-                android:layout_height="12dp"
+                android:layout_height="@dimen/_6sdp"
                 android:layout_gravity="bottom"
                 android:background="@color/g_light_gray"
                 app:tabGravity="center"
@@ -53,7 +53,7 @@
                 android:id="@+id/img_close"
                 android:layout_width="40dp"
                 android:layout_height="50dp"
-                android:padding="@dimen/_3sdp"
+                android:padding="@dimen/_6sdp"
                 android:src="@drawable/ic_close"
                 app:tint="@color/g_black" />
         </androidx.cardview.widget.CardView>

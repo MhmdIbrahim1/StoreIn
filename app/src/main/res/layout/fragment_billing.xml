@@ -99,8 +99,8 @@
 
         <ImageView
             android:id="@+id/imageAddAddress"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             app:layout_constraintEnd_toEndOf="@id/guideline2"
             app:layout_constraintTop_toTopOf="@id/tvShoppingAddress"
             app:layout_constraintBottom_toBottomOf="@id/tvShoppingAddress"

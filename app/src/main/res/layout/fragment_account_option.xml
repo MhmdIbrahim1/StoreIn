@@ -17,31 +17,31 @@
 
         <TextView
             android:id="@+id/tvAppName"
+            style="@style/h3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/h3"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="@dimen/_70sdp"
             android:drawableStart="@drawable/ic_kleine_shape"
-            android:drawablePadding="6dp"
+            android:drawablePadding="@dimen/_6sdp"
+            android:text="StoreIn."
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="StoreIn."/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvRightAddressForShopping"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/h4"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="@dimen/_45sdp"
             app:layout_constraintTop_toBottomOf="@id/tvAppName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/rightAddress"
             android:textAlignment="center"
             android:gravity="center"
-            android:textSize="35sp"
+            android:textSize="@dimen/_28ssp"
             />
 
         <TextView
@@ -55,30 +55,32 @@
             android:textAlignment="center"
             android:gravity="center"
             android:text="@string/qulity"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="@dimen/_10sdp"
             />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonRegisterAccountOptions"
+            style="@style/blueButtonStyle"
             android:layout_width="@dimen/mediumButtonWidth"
             android:layout_height="@dimen/mediumButtonHeight"
-            style="@style/blueButtonStyle"
-            app:layout_constraintTop_toBottomOf="@id/tvQuality"
-            app:layout_constraintStart_toStartOf="@id/tvQuality"
-            app:layout_constraintEnd_toEndOf="@id/tvQuality"
+            android:text="Register"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:text="Register"/>
+            app:layout_constraintEnd_toEndOf="@id/tvQuality"
+            app:layout_constraintHorizontal_bias="0.508"
+            app:layout_constraintStart_toStartOf="@id/tvQuality"
+            app:layout_constraintTop_toBottomOf="@id/tvQuality"
+            app:layout_constraintVertical_bias="0.282" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonLoginAccountOptions"
             style="@style/whiteButtonStyle"
             android:layout_width="@dimen/mediumButtonWidth"
             android:layout_height="@dimen/mediumButtonHeight"
+            android:layout_marginTop="@dimen/_10sdp"
             android:text="Login"
             app:layout_constraintEnd_toEndOf="@id/tvQuality"
             app:layout_constraintStart_toStartOf="@id/tvQuality"
-            app:layout_constraintTop_toBottomOf="@+id/buttonRegisterAccountOptions"
-            android:layout_marginTop="10dp"/>
+            app:layout_constraintTop_toBottomOf="@+id/buttonRegisterAccountOptions" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

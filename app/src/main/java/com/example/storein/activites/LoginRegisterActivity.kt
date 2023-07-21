@@ -13,6 +13,7 @@ class LoginRegisterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login_register)
 
     }
+    @Deprecated("Deprecated in Java", ReplaceWith("finishAffinity()"))
     override fun onBackPressed() {
         // This will close the app when back button is pressed from LoginRegisterActivity
         finishAffinity()

@@ -26,6 +26,8 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     private val cartProductAdapter by lazy { CartProductAdapter() }
     private val viewModel by activityViewModels<CartViewModel>()
 
+    var totalPrice = 0f
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,17 +41,10 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         super.onViewCreated(view, savedInstanceState)
 
         setUpCartRV()
+        observeDeleteDialog()
+        observeProductPrice()
+        observeCartProduct()
 
-        var totalPrice = 0f
-        lifecycleScope.launchWhenStarted {
-            viewModel.productsPrice.collectLatest { price ->
-                price?.let {
-                    totalPrice = it
-                    bindind.tvTotalPrice.text = "E£ ${price.formatPrice()}"
-                }
-
-            }
-        }
 
         bindind.buttonCheckout.setOnClickListener {
             val action = CartFragmentDirections.actionCartFragmentToBillingFragment(
@@ -59,7 +54,6 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             )
             findNavController().navigate(action)
         }
-
 
         cartProductAdapter.onProductClick = {
             val b = Bundle().apply { putParcelable("product", it.product) }
@@ -74,6 +68,12 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             viewModel.changeQuantity(it, FirebaseCommon.QuantityChanging.DECREASE)
         }
 
+        bindind.imageCloseCart.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun observeDeleteDialog(){
         lifecycleScope.launchWhenStarted {
             viewModel.deleteDialog.collectLatest {
                 val alertDialog = AlertDialog.Builder(requireContext()).apply {
@@ -91,7 +91,21 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
                 alertDialog.show()
             }
         }
+    }
 
+    private fun observeProductPrice(){
+        lifecycleScope.launchWhenStarted {
+            viewModel.productsPrice.collectLatest { price ->
+                price?.let {
+                    totalPrice = it
+                    bindind.tvTotalPrice.text = "E£ ${price.formatPrice()}"
+                }
+
+            }
+        }
+    }
+
+    private fun observeCartProduct(){
         lifecycleScope.launchWhenStarted {
             viewModel.cartProduct.collect() {
                 when (it) {
@@ -121,10 +135,6 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
 
                 }
             }
-        }
-
-        bindind.imageCloseCart.setOnClickListener {
-            findNavController().popBackStack()
         }
     }
 

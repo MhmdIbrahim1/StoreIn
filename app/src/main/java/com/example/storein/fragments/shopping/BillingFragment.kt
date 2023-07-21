@@ -21,6 +21,7 @@ import com.example.storein.data.CartProduct
 import com.example.storein.data.order.Order
 import com.example.storein.data.order.OrderStatus
 import com.example.storein.databinding.FragmentBillingBinding
+import com.example.storein.helper.formatPrice
 import com.example.storein.utils.HorizontalItemDecoration
 import com.example.storein.utils.NetworkResult
 import com.example.storein.viewmodels.BillingViewModel
@@ -64,9 +65,11 @@ class BillingFragment : Fragment() {
 
         setUpBillingProductRv()
         setUpAddressRv()
+        observeOrders()
+        observeAddress()
 
 
-        if (!args.payment){
+        if (!args.payment) {
             binding.apply {
                 buttonPlaceOrder.visibility = View.INVISIBLE
                 totalBoxContainer.visibility = View.INVISIBLE
@@ -80,6 +83,33 @@ class BillingFragment : Fragment() {
             findNavController().navigate(R.id.action_billingFragment_to_addressFragment)
         }
 
+        billingProductAdapter.differ.submitList(products)
+        binding.tvTotalPrice.text = "E£ ${totalPrice.formatPrice()}"
+
+        binding.imageCloseBilling.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        addressAdapter.onClick = {
+            selectedAddress = it
+            if (!args.payment) {
+                val action = BillingFragmentDirections.actionBillingFragmentToAddressFragment(it)
+                findNavController().navigate(action)
+            }
+        }
+
+        binding.buttonPlaceOrder.setOnClickListener {
+            if (selectedAddress == null) {
+                Toast.makeText(requireContext(), "Please select an address", Toast.LENGTH_SHORT)
+                    .show()
+                return@setOnClickListener
+            } else {
+                showOrderConfirmationDialog()
+            }
+        }
+    }
+
+    private fun observeOrders() {
         lifecycleScope.launchWhenStarted {
             orderViewModel.orders.collectLatest {
                 when (it) {
@@ -107,6 +137,9 @@ class BillingFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun observeAddress() {
         lifecycleScope.launchWhenStarted {
             billingViewModel.address.collectLatest {
                 when (it) {
@@ -126,30 +159,6 @@ class BillingFragment : Fragment() {
 
                     else -> Unit
                 }
-            }
-        }
-        billingProductAdapter.differ.submitList(products)
-        binding.tvTotalPrice.text = "E£ $totalPrice"
-
-        binding.imageCloseBilling.setOnClickListener {
-            findNavController().popBackStack()
-        }
-
-        addressAdapter.onClick = {
-            selectedAddress = it
-            if (!args.payment) {
-                val b = Bundle().apply { putParcelable("address", it) }
-                findNavController().navigate(R.id.action_billingFragment_to_addressFragment, b)
-            }
-        }
-
-        binding.buttonPlaceOrder.setOnClickListener {
-            if (selectedAddress == null) {
-                Toast.makeText(requireContext(), "Please select an address", Toast.LENGTH_SHORT)
-                    .show()
-                return@setOnClickListener
-            } else {
-                showOrderConfirmationDialog()
             }
         }
     }

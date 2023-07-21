@@ -1,6 +1,8 @@
 package com.example.storein.fragments.categories
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,22 +13,28 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import br.com.simplepass.loadingbutton.customViews.CircularProgressButton
 import com.example.storein.R
 import com.example.storein.adapters.BestDealsAdapter
 import com.example.storein.adapters.BestProductAdapter
 import com.example.storein.adapters.SpecialProductAdapter
+import com.example.storein.data.CartProduct
 import com.example.storein.data.Product
 import com.example.storein.databinding.FragmentMainCategoryBinding
 import com.example.storein.fragments.shopping.HomeFragmentDirections
 import com.example.storein.helper.getProductPrice
 import com.example.storein.utils.NetworkResult
 import com.example.storein.utils.ShowBottomNavigation
+import com.example.storein.viewmodels.DetailsViewModel
 import com.example.storein.viewmodels.MainCategoryViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
@@ -34,9 +42,10 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
     private lateinit var bestDealsAdapter: BestDealsAdapter
     private lateinit var bestProductAdapter: BestProductAdapter
     private lateinit var nestedScrollView: NestedScrollView
-
     private lateinit var binding: FragmentMainCategoryBinding
     private val viewModel by viewModels<MainCategoryViewModel>()
+
+    private val detailsViewModel by viewModels<DetailsViewModel>()
 
     private var isFirstTime = true
 
@@ -85,7 +94,7 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
         }
 
         bestProductAdapter.onClick = { product ->
-            if   (isAdded) {
+            if (isAdded) {
                 // Calculate the price after applying the offer percentage (if available)
                 val priceAfterOffer =
                     product.offerPercentage?.getProductPrice(product.price) ?: product.price
@@ -134,6 +143,28 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
         observeBestDeals()
         observeBestProducts()
 
+
+        specialProductAdapter.onAddToCartClickListener = object : SpecialProductAdapter.OnAddToCartClickListener {
+            override fun onAddToCartClicked(product: Product, button: CircularProgressButton) {
+                // Start the animation
+                button.startAnimation()
+
+                // Simulate a network operation
+                val handler = Handler(Looper.getMainLooper())
+                handler.postDelayed({
+                    // Stop the animation after the operation completes
+                    button.revertAnimation()
+
+                    // Get the first available color and size from the product
+                    val availableColors = product.colors?.get(0)
+                    val availableSizes = product.sizes?.get(0)
+
+                    // Add the product to the cart with the selected color and size
+                    detailsViewModel.addUpdateProductInCart(CartProduct(product, 1, availableColors, availableSizes))
+                    Toast.makeText(requireContext(),"Added To Cart",Toast.LENGTH_SHORT).show()
+                }, 2000) // Delay of 2 seconds
+            }
+        }
     }
 
     private fun fetchNewData() {
@@ -284,7 +315,6 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
             adapter = specialProductAdapter
         }
     }
-
 
     private fun showShimmerEffect() {
         binding.shimmerSpecialProducts.startShimmer()

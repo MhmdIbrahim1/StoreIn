@@ -151,6 +151,7 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp"
+            app:spinning_bar_color="@color/white"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/rightGuideline"

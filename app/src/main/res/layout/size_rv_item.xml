@@ -32,7 +32,7 @@
         android:visibility="visible"
         android:text="S"
         android:textAlignment="center"
-        android:textSize="12sp"
+        android:textSize="@dimen/_10ssp"
         android:textColor="@color/g_white"
         app:layout_constraintStart_toStartOf="@id/imageColor"
         app:layout_constraintTop_toTopOf="@id/imageColor"

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import br.com.simplepass.loadingbutton.customViews.CircularProgressButton
 import coil.load
 import com.bumptech.glide.Glide
 import com.example.storein.data.Product
@@ -14,7 +15,9 @@ import com.example.storein.databinding.SpecialRvItemBinding
 class SpecialProductAdapter :
     RecyclerView.Adapter<SpecialProductAdapter.SpecialProductViewHolder>() {
 
-    inner class SpecialProductViewHolder(private val binding: SpecialRvItemBinding) :
+    var onAddToCartClickListener: OnAddToCartClickListener? = null
+
+    inner class SpecialProductViewHolder(val binding: SpecialRvItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product) {
             binding.apply {
@@ -69,8 +72,15 @@ class SpecialProductAdapter :
         holder.itemView.setOnClickListener {
             onClick?.invoke(product)
         }
+        holder.binding.btnAddToCart.setOnClickListener {
+            onAddToCartClickListener?.onAddToCartClicked(product, holder.binding.btnAddToCart)
+        }
     }
 
 
     var onClick: ((Product) -> Unit)? = null
+
+    interface OnAddToCartClickListener {
+        fun onAddToCartClicked(product: Product, button:CircularProgressButton)
+    }
 }

@@ -94,11 +94,11 @@ class ProductDetailsFragment : Fragment() {
             // Ask the user to select a color and size before adding to cart
             if (availableColors.isNullOrEmpty() && availableSizes.isNullOrEmpty()) {
                 // If both colors and sizes are empty or null, the product is out of stock
-                Toast.makeText(requireContext(), "Sorry, this product is currently out of stock.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), (R.string.OutOfStock), Toast.LENGTH_SHORT).show()
             } else if (availableColors.isNullOrEmpty()) {
                 // If only colors are empty or null, prompt the user to select a size
                 if (selectedSize == null) {
-                    Toast.makeText(requireContext(), "Please select a size", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), (R.string.PleaseSelectSize), Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
                 // Add the product to the cart with the selected size
@@ -106,7 +106,7 @@ class ProductDetailsFragment : Fragment() {
             } else if (availableSizes.isNullOrEmpty()) {
                 // If only sizes are empty or null, prompt the user to select a color
                 if (selectedColor == null) {
-                    Toast.makeText(requireContext(), "Please select a color", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), (R.string.PleaseSelectColor), Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
                 // Add the product to the cart with the selected color
@@ -114,7 +114,7 @@ class ProductDetailsFragment : Fragment() {
             } else {
                 // Both colors and sizes are available, ask the user to select one
                 if (selectedColor == null || selectedSize == null) {
-                    Toast.makeText(requireContext(), "Please select a color and size", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), (R.string.PleaseSelectColorAndSize), Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
                 // Add the product to the cart with the selected color and size
@@ -152,7 +152,7 @@ class ProductDetailsFragment : Fragment() {
     }
 
 
-    fun observeAddToCart(){
+    private fun observeAddToCart(){
         // Observe the "addToCart"  for changes and react accordingly
         lifecycleScope.launchWhenStarted {
             viewModel.addToCart.collect { result ->
@@ -165,7 +165,7 @@ class ProductDetailsFragment : Fragment() {
                         // Show success animation and a toast message when the product is added to cart successfully
                         binding.btnAddToCart.revertAnimation()
                         binding.btnAddToCart.setBackgroundColor(resources.getColor(R.color.black))
-                        Toast.makeText(requireContext(), "Added to cart", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), (R.string.AddToCart), Toast.LENGTH_SHORT).show()
                     }
                     is NetworkResult.Error -> {
                         // Show error message in a toast if there's an issue adding the product to cart

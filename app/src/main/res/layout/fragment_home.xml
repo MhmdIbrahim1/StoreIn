@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:background="@drawable/search_box_background"
         android:fontFamily="@font/poppins_thin"
-        android:hint="Search Now"
+        android:hint="@string/search_now"
         android:paddingStart="@dimen/_12sdp"
         android:singleLine="true"
         android:textColor="#919394"

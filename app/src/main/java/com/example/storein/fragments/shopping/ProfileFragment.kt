@@ -17,12 +17,14 @@ import com.example.storein.R
 import com.example.storein.activites.LoginRegisterActivity
 import com.example.storein.activites.ShoppingActivity
 import com.example.storein.databinding.FragmentProfileBinding
+import com.example.storein.utils.LocaleHelper
 import com.example.storein.utils.NetworkResult
 import com.example.storein.utils.ShowBottomNavigation
 import com.example.storein.viewmodels.ProfileViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.intuit.sdp.BuildConfig
+import com.zeugmasolutions.localehelper.Locales
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -58,7 +60,15 @@ class ProfileFragment : Fragment() {
 
 
         onLogoutClick()
-
+            // Set up click listeners for language change
+        binding.linearLanguageEnglish.setOnClickListener {
+                LocaleHelper.updateLocale(requireContext(), "en") // English
+                recreateActivity()
+            }
+        binding.linearLanguageArabic.setOnClickListener {
+                LocaleHelper.updateLocale(requireContext(), "ar") // Arabic
+                recreateActivity()
+            }
         binding.constraintProfile.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_userAccountFragment)
         }
@@ -74,7 +84,7 @@ class ProfileFragment : Fragment() {
 
         binding.linearTrackOrder.setOnClickListener {
             val snackBar = requireActivity().findViewById<CoordinatorLayout>(R.id.snackBar_coordinator)
-            Snackbar.make(snackBar,resources.getText(R.string.g_coming_soon), Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(snackBar,resources.getText(R.string.ComingsSoon), Snackbar.LENGTH_SHORT).show()
         }
 
         binding.tvVersion.text = "Version ${BuildConfig.VERSION_CODE}"
@@ -115,6 +125,15 @@ class ProfileFragment : Fragment() {
             requireActivity().finish()
         }
     }
+
+    // Recreate the activity to apply the updated language
+    private fun recreateActivity() {
+//        val intent = Intent(requireActivity(), ShoppingActivity::class.java)
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+//        startActivity(intent)
+        requireActivity().recreate()
+    }
+
     override fun onResume() {
         super.onResume()
         ShowBottomNavigation()

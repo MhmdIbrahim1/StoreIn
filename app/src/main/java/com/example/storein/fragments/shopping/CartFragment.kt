@@ -77,12 +77,12 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         lifecycleScope.launchWhenStarted {
             viewModel.deleteDialog.collectLatest {
                 val alertDialog = AlertDialog.Builder(requireContext()).apply {
-                    setTitle("Delete Item From Cart")
-                    setMessage("Are you sure you want to delete this item from cart?")
-                    setNegativeButton("Cancel") { dialog, _ ->
+                    setTitle(resources.getString(R.string.DeleteItemFromCart))
+                    setMessage(resources.getString(R.string.AreYouSureYouWantToDeleteThisItemFromCart))
+                    setNegativeButton(resources.getString(R.string.Cancel)) { dialog, _ ->
                         dialog.dismiss()
                     }
-                    setPositiveButton("Delete") { dialog, _ ->
+                    setPositiveButton(resources.getString(R.string.Delete)) { dialog, _ ->
                         viewModel.deleteCartProduct(it)
                         dialog.dismiss()
                     }

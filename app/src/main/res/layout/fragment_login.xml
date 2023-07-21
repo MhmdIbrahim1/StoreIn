@@ -74,7 +74,7 @@
             app:layout_constraintEnd_toEndOf="@id/guidelineLoginRight"
             app:layout_constraintTop_toBottomOf="@id/edEmailLogin"
             style="@style/editText"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:layout_marginTop="15dp"/>
 
@@ -87,7 +87,7 @@
             app:layout_constraintTop_toBottomOf="@id/edPasswordLogin"
             android:textAlignment="center"
             android:gravity="center"
-            android:text="Forgot password"
+            android:text="@string/forgot_password"
             android:textColor="@color/black"
             />
 
@@ -99,7 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="Or"
+            android:text="@string/or"
             android:textAlignment="center"
             android:textColor="@color/black"
             app:layout_constraintEnd_toStartOf="@+id/guidelineLoginRight"
@@ -135,7 +135,7 @@
             app:layout_constraintStart_toStartOf="@id/guidelineLoginLeft"
             app:layout_constraintEnd_toEndOf="@id/guidelineLoginRight"
             android:layout_marginTop="15dp"
-            android:text="Login"
+            android:text="@string/login"
             app:spinning_bar_color="@color/white"/>
 
         <androidx.constraintlayout.widget.Guideline

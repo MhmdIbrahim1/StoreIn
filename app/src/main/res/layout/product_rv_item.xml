@@ -4,29 +4,29 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/g_light_gray"
-    android:padding="8dp">
+    android:background="@color/lightMediumGray"
+    android:padding="@dimen/_8sdp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="@dimen/_200sdp"
         app:cardElevation="1dp"
         app:cardCornerRadius="4dp"
         android:background="@color/g_card_background"
-        android:layout_marginBottom="8dp"
-        android:padding="8dp">
+        android:layout_marginBottom="@dimen/_8sdp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/_4sdp">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/img_product"
                 android:layout_width="@dimen/_130sdp"
                 android:layout_height="@dimen/_120sdp"
+                android:scaleType="fitXY"
                 app:layout_constraintDimensionRatio="H,16:9"
-                android:scaleType="fitCenter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -36,22 +36,23 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:paddingStart="@dimen/_4sdp"
                 android:orientation="horizontal"
+                android:paddingStart="@dimen/_9sdp"
                 app:layout_constraintEnd_toEndOf="@id/img_product"
                 app:layout_constraintStart_toStartOf="@id/img_product"
                 app:layout_constraintTop_toBottomOf="@id/img_product">
 
                 <TextView
                     android:id="@+id/tv_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:ellipsize="end"
                     android:fontFamily="@font/poppins_light"
-                    android:text="Chair"
                     android:maxLines="2"
+                    android:text="Chair"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/_12ssp"
                     android:textStyle="bold" />
 
                 <ImageView
@@ -69,13 +70,13 @@
                 android:id="@+id/tv_new_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:layout_marginBottom="@dimen/_12sdp"
                 android:fontFamily="@font/sf_pro_display"
                 android:text="$16000"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="@dimen/_10ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tv_price"
                 app:layout_constraintTop_toBottomOf="@id/linear_product_name" />
@@ -84,13 +85,13 @@
                 android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:layout_marginBottom="15dp"
-                android:paddingStart="@dimen/_4sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:layout_marginBottom="@dimen/_12sdp"
                 android:fontFamily="@font/sf_pro_display"
+                android:paddingStart="@dimen/_9sdp"
                 android:text="$16000"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="@dimen/_10ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/img_product"
                 app:layout_constraintTop_toBottomOf="@id/linear_product_name" />

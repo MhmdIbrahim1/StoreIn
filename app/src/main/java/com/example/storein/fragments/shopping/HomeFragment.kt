@@ -40,10 +40,10 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
         }
         binding.imgScan.setOnClickListener {
-            Toast.makeText(requireContext(), "Coming soon", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), (R.string.ComingsSoon), Toast.LENGTH_SHORT).show()
         }
         binding.imgMic.setOnClickListener {
-            Toast.makeText(requireContext(), "Coming soon", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), (R.string.ComingsSoon), Toast.LENGTH_SHORT).show()
         }
 
         val categoriesFragments = arrayListOf<Fragment>(
@@ -66,13 +66,13 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         binding.viewpagerHome.adapter = viewPager2Adapter
         TabLayoutMediator(binding.tabLayout, binding.viewpagerHome) { tab, position ->
             when(position) {
-                0 -> tab.text = "Home"
-                1 -> tab.text = "Shoes"
-                2 -> tab.text = "Chair"
-                3 -> tab.text = "Cupboard"
-                4 -> tab.text = "Table"
-                5 -> tab.text = "Accessory"
-                6 -> tab.text = "Furniture"
+                0 -> tab.text = resources.getString(R.string.HOME)
+                1 -> tab.text = resources.getString(R.string.SHOES)
+                2 -> tab.text = resources.getString(R.string.CHAIR)
+                3 -> tab.text = resources.getString(R.string.CUPBOARD)
+                4 -> tab.text = resources.getString(R.string.TABLE)
+                5 -> tab.text = resources.getString(R.string.ACCESSORY)
+                6 -> tab.text = resources.getString(R.string.FURNITURE)
             }
         }.attach()
     }

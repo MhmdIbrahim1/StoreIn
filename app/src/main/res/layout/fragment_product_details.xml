@@ -73,10 +73,10 @@
             <TextView
                 android:id="@+id/tvProductName"
                 style="@style/h3"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Product Name"
+                android:text="@string/product_name"
                 android:textStyle="bold" />
 
             <TextView
@@ -84,7 +84,7 @@
                 style="@style/h3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="15000E"
+                android:text="@string/_15000e"
                 android:textColor="@color/g_gray700" />
 
         </LinearLayout>
@@ -93,7 +93,7 @@
             android:id="@+id/tvProductDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Product Description"
+            android:text="@string/product_description"
             android:textColor="@color/g_gray700"
             android:textSize="@dimen/_11ssp"
             android:textStyle="bold"
@@ -134,7 +134,7 @@
                     style="@style/h3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Color"
+                    android:text="@string/color"
                     android:textColor="@color/g_gray700" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -155,7 +155,7 @@
                     style="@style/h3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Size"
+                    android:text="@string/size"
                     android:textColor="@color/g_gray700" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -176,7 +176,7 @@
             style="@style/blueButtonStyle"
             android:layout_marginTop="45dp"
             android:layout_marginBottom="@dimen/_20sdp"
-            android:text="Add to cart"
+            android:text="@string/add_to_cart"
             app:spinning_bar_color="@color/white"
             app:layout_constraintTop_toBottomOf="@id/llProductPreferences"
             app:layout_constraintStart_toStartOf="@id/llProductPreferences"

@@ -28,6 +28,7 @@ import com.example.storein.data.Product
 import com.example.storein.databinding.FragmentMainCategoryBinding
 import com.example.storein.fragments.shopping.HomeFragmentDirections
 import com.example.storein.helper.getProductPrice
+import com.example.storein.utils.HorizontalItemDecoration
 import com.example.storein.utils.NetworkResult
 import com.example.storein.utils.ShowBottomNavigation
 import com.example.storein.viewmodels.DetailsViewModel
@@ -300,6 +301,7 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
                 LinearLayoutManager.HORIZONTAL,
                 false
             )
+            binding.rvBestDealsProducts.addItemDecoration(HorizontalItemDecoration())
             adapter = bestDealsAdapter
         }
     }

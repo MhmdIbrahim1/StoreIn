@@ -45,7 +45,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tvAppName"
                 app:layout_constraintStart_toStartOf="@id/tvAppName"
                 app:layout_constraintEnd_toEndOf="@id/tvAppName"
-                android:text="Let's Register"
+                android:text="@string/let_s_register"
                 android:textAlignment="center"
                 android:gravity="center"
                 android:textSize="@dimen/_30ssp" />
@@ -60,7 +60,7 @@
                 app:layout_constraintEnd_toEndOf="@id/tvLetsRegister"
                 android:textAlignment="center"
                 android:gravity="center"
-                android:text="Do you have an account? log in" />
+                android:text="@string/do_you_have_an_account_log_in" />
 
             <EditText
                 android:id="@+id/edFirstNameRegister"
@@ -70,7 +70,7 @@
                 app:layout_constraintEnd_toEndOf="@id/guidelineRegisterRight"
                 app:layout_constraintTop_toBottomOf="@id/tvDoYouHaveAccount"
                 style="@style/editText"
-                android:hint="First Name"
+                android:hint="@string/first_name"
                 android:layout_marginTop="@dimen/_40sdp" />
 
             <EditText
@@ -81,7 +81,7 @@
                 app:layout_constraintEnd_toEndOf="@id/guidelineRegisterRight"
                 app:layout_constraintTop_toBottomOf="@id/edFirstNameRegister"
                 style="@style/editText"
-                android:hint="Last name"
+                android:hint="@string/last_name"
                 android:layout_marginTop="@dimen/_6sdp" />
 
             <EditText
@@ -92,7 +92,7 @@
                 app:layout_constraintEnd_toEndOf="@id/guidelineRegisterRight"
                 app:layout_constraintTop_toBottomOf="@id/edLastNameRegister"
                 style="@style/editText"
-                android:hint="Email"
+                android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 android:layout_marginTop="@dimen/_6sdp" />
 
@@ -104,7 +104,7 @@
                 app:layout_constraintEnd_toEndOf="@id/guidelineRegisterRight"
                 app:layout_constraintTop_toBottomOf="@id/edEmailRegister"
                 style="@style/editText"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:inputType="textPassword"
                 android:layout_marginTop="@dimen/_6sdp" />
 
@@ -117,7 +117,7 @@
                 app:layout_constraintStart_toStartOf="@id/guidelineRegisterLeft"
                 app:layout_constraintEnd_toEndOf="@id/guidelineRegisterRight"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Register"
+                android:text="@string/register"
                 app:spinning_bar_color="@color/white" />
 
 

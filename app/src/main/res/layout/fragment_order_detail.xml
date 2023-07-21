@@ -89,7 +89,7 @@
             android:id="@+id/tvShippingAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Address"
+            android:text="@string/address"
             android:fontFamily="@font/poppins_thin"
             app:layout_constraintStart_toStartOf="@id/guideline1"
             android:textColor="@color/black"
@@ -113,21 +113,21 @@
                 android:id="@+id/tvFullName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Full Name"
+                android:text="@string/full_name"
                 android:textSize="@dimen/_10ssp" />
 
             <TextView
                 android:id="@+id/tvAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Address"
+                android:text="@string/address"
                 android:textSize="@dimen/_10ssp" />
 
             <TextView
                 android:id="@+id/tvPhoneNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Phone"
+                android:text="@string/phone"
                 android:textSize="@dimen/_10ssp" />
 
         </LinearLayout>
@@ -148,7 +148,7 @@
             android:id="@+id/tvProducts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Products"
+            android:text="@string/products"
             android:fontFamily="@font/poppins_thin"
             app:layout_constraintStart_toStartOf="@id/guideline1"
             android:textColor="@color/black"
@@ -185,7 +185,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Total"
+                android:text="@string/total"
                 android:textSize="@dimen/_13ssp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/sf_pro_display"

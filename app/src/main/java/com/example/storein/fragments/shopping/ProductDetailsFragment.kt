@@ -165,7 +165,7 @@ class ProductDetailsFragment : Fragment() {
                         // Show success animation and a toast message when the product is added to cart successfully
                         binding.btnAddToCart.revertAnimation()
                         binding.btnAddToCart.setBackgroundColor(resources.getColor(R.color.black))
-                        Toast.makeText(requireContext(), (R.string.AddToCart), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), (R.string.AddedToCart), Toast.LENGTH_SHORT).show()
                     }
                     is NetworkResult.Error -> {
                         // Show error message in a toast if there's an issue adding the product to cart

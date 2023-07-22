@@ -1,5 +1,6 @@
 package com.example.storein.activites
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -12,6 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.storein.databinding.ActivityShoppingBinding
+import com.example.storein.utils.LocaleHelper
 import com.example.storein.utils.NetworkResult
 import com.example.storein.viewmodels.CartViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -23,6 +25,13 @@ class ShoppingActivity : AppCompatActivity() {
     val viewModel by viewModels<CartViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Retrieve the language setting from SharedPreferences
+        val sharedPref = getSharedPreferences("Language", Context.MODE_PRIVATE)
+        val language = sharedPref.getString("language", "en") // default English if no setting is stored
+        // Set the language based on the stored setting
+        LocaleHelper.setLocale(this, language!!)
+
         setContentView(binding.root)
 
         // set up the navigation controller

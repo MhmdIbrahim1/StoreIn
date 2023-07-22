@@ -26,7 +26,7 @@
     <string name="save">حفظ</string>
     <string name="best_products">أفضل المنتجات</string>
     <string name="payment_methods">طرق الدفع</string>
-    <string name="virtual_payments_not_avaliable_yet_coming_soon">الدفع الإلكتروني غير متوفر حاليا، قريبا فقط الدفع عند الاستلام متاح</string>
+    <string name="virtual_payments_not_avaliable_yet_coming_soon">الدفع الإلكتروني غير متوفر حاليا. فقط الدفع عند الاستلام متاح</string>
     <string name="shipping_address">عنوان الشحن</string>
     <string name="total">المجموع</string>
     <string name="_150">$150</string>
@@ -68,7 +68,7 @@
     <string name="cancel">إلغاء</string>
     <string name="send">إرسال</string>
     <string name="regional">أللغات</string>
-    <string name="language">أللغه</string>
+    <string name="language">أللغات</string>
     <string name="english">انجليزي</string>
     <string name="arabic">عربي</string>
     <string name="HOME">الرئيسية</string>
@@ -91,4 +91,17 @@
     <string name="Yes">نعم</string>
     <string name="Cancel">إلغاء</string>
     <string name="Delete">حذف</string>
+    <string name="AddedToCart">تمت الإضافة إلى السلة</string>
+    <string name="PleaseSelectAddress">الرجاء اختيار العنوان</string>
+    <string name="Ordered">تم الطلب</string>
+    <string name="Canceled">تم الإلغاء</string>
+    <string name="Confirmed">تم التأكيد</string>
+    <string name="Delivered">تم التوصيل</string>
+    <string name="Returned">تم الإرجاع</string>
+    <string name="Shipped">تم الشحن</string>
+    <string name="home_address">المنزل</string>
+    <string name="see_product">عرض المنتج</string>
+    <string name="OrderPlacedSuccessfully">تم تقديم الطلب بنجاح</string>
+    <string name="OrderItems">المنتجات</string>
+=    <string name="AreYouSureYouWantToPlaceOrder">هل أنت متأكد من أنك تريد تقديم الطلب؟</string>
 </resources>

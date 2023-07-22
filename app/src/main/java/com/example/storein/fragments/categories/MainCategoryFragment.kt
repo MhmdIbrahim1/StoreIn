@@ -162,7 +162,7 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
 
                     // Add the product to the cart with the selected color and size
                     detailsViewModel.addUpdateProductInCart(CartProduct(product, 1, availableColors, availableSizes))
-                    Toast.makeText(requireContext(),"Added To Cart",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),resources.getString(R.string.AddedToCart),Toast.LENGTH_SHORT).show()
                 }, 2000) // Delay of 2 seconds
             }
         }

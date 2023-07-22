@@ -24,7 +24,7 @@ class OrderDetailsFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentOrderDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -38,26 +38,32 @@ class OrderDetailsFragment: Fragment() {
         val order = args.order
         binding.apply {
             tvOrderId.text = "Order #${order.orderId}"
-            stepView.setSteps(
-                mutableListOf(
-                    OrderStatus.Ordered.status,
-                    OrderStatus.Confirmed.status,
-                    OrderStatus.Shipped.status,
-                    OrderStatus.Delivered.status,
-                    )
+            val steps = mutableListOf(
+                OrderStatus.Ordered.status,
+                OrderStatus.Confirmed.status,
+                OrderStatus.Shipped.status,
+                OrderStatus.Delivered.status,
             )
-            val currentOrderStep = when(getOrderStatus(order.orderStatus)){
+
+            val orderStatus = getOrderStatus(order.orderStatus)
+            if (orderStatus == OrderStatus.Canceled) {
+                steps.add(0, OrderStatus.Canceled.status)
+            }
+
+            stepView.setSteps(steps)
+
+            val currentOrderStep = when(orderStatus){
                 OrderStatus.Ordered -> 0
                 OrderStatus.Confirmed -> 1
                 OrderStatus.Shipped -> 2
                 OrderStatus.Delivered -> 3
-                else -> 0
+                OrderStatus.Canceled -> 0
+                else ->0
             }
-            stepView.go(currentOrderStep, true)
-            if (currentOrderStep == 3) {
+            stepView.go(currentOrderStep, false)
+            if (currentOrderStep == 3 && orderStatus != OrderStatus.Canceled) {
                 stepView.done(true)
             }
-
 
             tvFullName.text = order.adddress.fullName
             tvAddress.text = "${order.adddress.street} ${order.adddress.city} ${order.adddress.state}"

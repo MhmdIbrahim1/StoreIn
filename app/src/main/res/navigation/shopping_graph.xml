@@ -52,6 +52,9 @@
         <action
             android:id="@+id/action_profileFragment_to_billingFragment"
             app:destination="@id/billingFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_languageFragment"
+            app:destination="@id/languageFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
@@ -117,5 +120,14 @@
         <argument
             android:name="order"
             app:argType="com.example.storein.data.order.Order" />
+    </fragment>
+    <fragment
+        android:id="@+id/languageFragment"
+        android:name="com.example.storein.fragments.shopping.LanguageFragment"
+        android:label="LanguageFragment"
+        tools:layout="@layout/fragment_language">
+        <action
+            android:id="@+id/action_languageFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 </navigation>

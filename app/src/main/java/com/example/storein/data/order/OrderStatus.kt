@@ -1,5 +1,7 @@
 package com.example.storein.data.order
 
+import com.example.storein.R
+
 sealed class OrderStatus(val status: String) {
 
     object Ordered: OrderStatus("Ordered")

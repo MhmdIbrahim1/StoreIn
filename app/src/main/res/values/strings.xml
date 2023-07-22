@@ -70,9 +70,9 @@
     <string name="cancel">Cancel</string>
     <string name="send">Send</string>
     <string name="regional">Regional</string>
-    <string name="language">Language</string>
+    <string name="language">Languages</string>
     <string name="english">English</string>
-    <string name="arabic">Arabic</string>
+    <string name="arabic">عربي</string>
 
     <string name="HOME">Home</string>
     <string name="SHOES">Shoes</string>
@@ -96,5 +96,18 @@
     <string name="Yes">Yes</string>
 
     <string name="Delete">Delete</string>
+    <string name="AddedToCart">Added To Cart</string>
+    <string name="PleaseSelectAddress">Please select an address</string>
 
+    <string name="Ordered">Ordered</string>
+    <string name="Canceled">Canceled</string>
+    <string name="Confirmed">Confirmed</string>
+    <string name="Delivered">Delivered</string>
+    <string name="Returned">Returned</string>
+    <string name="Shipped">Shipped</string>
+    <string name="home_address">Home</string>
+    <string name="see_product">See product</string>
+    <string name="OrderPlacedSuccessfully">Order Placed Successfully</string>
+    <string name="OrderItems">Order Items</string>
+    <string name="AreYouSureYouWantToPlaceOrder">Are you sure you want to place order</string>
 </resources>

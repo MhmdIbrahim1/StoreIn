@@ -17,7 +17,6 @@ import com.example.storein.R
 import com.example.storein.activites.LoginRegisterActivity
 import com.example.storein.activites.ShoppingActivity
 import com.example.storein.databinding.FragmentProfileBinding
-import com.example.storein.utils.LocaleHelper
 import com.example.storein.utils.NetworkResult
 import com.example.storein.utils.ShowBottomNavigation
 import com.example.storein.viewmodels.ProfileViewModel
@@ -32,7 +31,6 @@ import kotlinx.coroutines.flow.collectLatest
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     private val viewModel by viewModels<ProfileViewModel>()
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,20 +53,13 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
         onLogoutClick()
-            // Set up click listeners for language change
-        binding.linearLanguageEnglish.setOnClickListener {
-                LocaleHelper.updateLocale(requireContext(), "en") // English
-                recreateActivity()
-            }
-        binding.linearLanguageArabic.setOnClickListener {
-                LocaleHelper.updateLocale(requireContext(), "ar") // Arabic
-                recreateActivity()
-            }
+        onLanguageClick()
+
         binding.constraintProfile.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_userAccountFragment)
         }
@@ -78,16 +69,22 @@ class ProfileFragment : Fragment() {
 
         binding.linearBilling.setOnClickListener {
             val action =
-                ProfileFragmentDirections.actionProfileFragmentToBillingFragment(0f, emptyArray(), false)
+                ProfileFragmentDirections.actionProfileFragmentToBillingFragment(
+                    0f,
+                    emptyArray(),
+                    false
+                )
             findNavController().navigate(action)
         }
 
         binding.linearTrackOrder.setOnClickListener {
-            val snackBar = requireActivity().findViewById<CoordinatorLayout>(R.id.snackBar_coordinator)
-            Snackbar.make(snackBar,resources.getText(R.string.ComingsSoon), Snackbar.LENGTH_SHORT).show()
+            val snackBar =
+                requireActivity().findViewById<CoordinatorLayout>(R.id.snackBar_coordinator)
+            Snackbar.make(snackBar, resources.getText(R.string.ComingsSoon), Snackbar.LENGTH_SHORT)
+                .show()
         }
 
-        binding.tvVersion.text = "Version ${BuildConfig.VERSION_CODE}"
+        binding.tvVersion.text = "Version ${BuildConfig.VERSION_NAME}"
 
         lifecycleScope.launchWhenStarted {
             viewModel.user.collectLatest {
@@ -126,12 +123,10 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    // Recreate the activity to apply the updated language
-    private fun recreateActivity() {
-//        val intent = Intent(requireActivity(), ShoppingActivity::class.java)
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-//        startActivity(intent)
-        requireActivity().recreate()
+    private fun onLanguageClick() {
+        binding.linearLanguage.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_languageFragment)
+        }
     }
 
     override fun onResume() {

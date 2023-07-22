@@ -100,7 +100,7 @@ class BillingFragment : Fragment() {
 
         binding.buttonPlaceOrder.setOnClickListener {
             if (selectedAddress == null) {
-                Toast.makeText(requireContext(), "Please select an address", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), resources.getString(R.string.PleaseSelectAddress), Toast.LENGTH_SHORT)
                     .show()
                 return@setOnClickListener
             } else {
@@ -122,7 +122,7 @@ class BillingFragment : Fragment() {
                         findNavController().navigateUp()
                         Snackbar.make(
                             requireView(),
-                            "Order Placed Successfully",
+                            R.string.OrderPlacedSuccessfully,
                             Snackbar.LENGTH_LONG
                         ).show()
                     }
@@ -165,12 +165,12 @@ class BillingFragment : Fragment() {
 
     private fun showOrderConfirmationDialog() {
         val alertDialog = AlertDialog.Builder(requireContext()).apply {
-            setTitle("Order Items")
-            setMessage("Are you sure you want to place this order?")
-            setNegativeButton("Cancel") { dialog, _ ->
+            setTitle(R.string.OrderItems)
+            setMessage(R.string.AreYouSureYouWantToPlaceOrder)
+            setNegativeButton(R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
             }
-            setPositiveButton("Yes") { dialog, _ ->
+            setPositiveButton(R.string.Yes) { dialog, _ ->
                 val order = Order(
                     OrderStatus.Ordered.status,
                     totalPrice,

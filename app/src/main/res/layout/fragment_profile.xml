@@ -308,7 +308,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tvRegional">
 
                 <LinearLayout
-                    android:id="@+id/linear_language_english"
+                    android:id="@+id/linear_language"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -341,16 +341,6 @@
                         android:src="@drawable/ic_arrow"
                         app:tint="@color/g_icon_tint" />
 
-                    <TextView
-                        android:id="@+id/tvLanguage"
-                        style="@style/MediumTextViewThin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/_15sdp"
-                        android:text="@string/english"
-                        android:textColor="@color/g_gray700"
-                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -361,60 +351,9 @@
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:background="@color/g_gray500" />
 
-                <LinearLayout
-                    android:id="@+id/linear_language_arabic"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_gravity="center_vertical"
-                        android:background="@drawable/settings_items_background"
-                        android:backgroundTint="#5856d6"
-                        android:src="@drawable/ic_language"
-                        app:tint="@color/white" />
-
-                    <TextView
-                        android:id="@+id/dfghar"
-                        style="@style/MediumTextViewThin"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/_15sdp"
-                        android:layout_weight="1"
-                        android:text="@string/language"
-                        android:textColor="@color/g_hint"
-                        android:textStyle="bold" />
-
-                    <ImageView
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_arrow"
-                        app:tint="@color/g_icon_tint" />
 
 
-                    <TextView
-                        android:id="@+id/tvLanguageArabic"
-                        style="@style/MediumTextViewThin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/_15sdp"
-                        android:text="@string/arabic"
-                        android:textColor="@color/g_gray700"
-                        android:textStyle="bold" />
-                </LinearLayout>
 
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    android:background="@color/g_gray500" />
                 <LinearLayout
                     android:id="@+id/linearLogOut"
                     android:layout_width="match_parent"

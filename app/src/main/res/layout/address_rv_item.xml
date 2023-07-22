@@ -10,7 +10,7 @@
         android:background="@drawable/unselected_button_background"
         android:clickable="true"
         android:fontFamily="@font/poppins_thin"
-        android:text="@string/home"
+        android:text="@string/home_address"
         android:textAllCaps="false"
         android:textColor="@color/g_blue_gray200"
         app:layout_constraintBottom_toBottomOf="parent"

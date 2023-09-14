@@ -1,8 +1,6 @@
 # StoreIn
 StoreIn app targets people who are looking to buy high quality furniture products for their house e.g : cupboards, chairs. And it targets merchants that sell furniture products to enable them to spread their markets and put their products online so everyone can check them out and order them.
 
-Download Link: https://www.mediafire.com/file/lw2i7ttokgk3g35/keline.apk/file
-
 # preview
 ![Untitled-1](https://user-images.githubusercontent.com/78867217/163694236-4e1657e8-d24d-4da6-a451-4c71f68d1cec.jpg)
 ![Untitled-1](https://user-images.githubusercontent.com/78867217/163694361-6d33565a-9178-4ed7-873e-e8def0160166.jpg)

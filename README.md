@@ -3,7 +3,7 @@ StoreIn app targets people who are looking to buy high quality furniture product
 
 # preview
 ![Untitled-1](![image](https://github.com/MhmdIbrahim1/StoreIn/assets/107378571/3f0865ab-c8d0-46da-af00-f17ef58643b0)
-![Untitled-1](https://user-images.githubusercontent.com/78867217/163694361-6d33565a-9178-4ed7-873e-e8def0160166.jpg)
+![Untitled-1](![image](https://github.com/MhmdIbrahim1/StoreIn/assets/107378571/b830ed9b-a17c-4b54-b078-47d8ceca9078)
 
 
 # Libraries and technologies used

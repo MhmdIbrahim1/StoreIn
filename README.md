@@ -2,7 +2,7 @@
 StoreIn app targets people who are looking to buy high quality furniture products for their house e.g : cupboards, chairs. And it targets merchants that sell furniture products to enable them to spread their markets and put their products online so everyone can check them out and order them.
 
 # preview
-![Untitled-1](![image](https://github.com/MhmdIbrahim1/StoreIn/assets/107378571/3f0865ab-c8d0-46da-af00-f17ef58643b0))
+![Untitled-1](![image](https://github.com/MhmdIbrahim1/StoreIn/assets/107378571/3f0865ab-c8d0-46da-af00-f17ef58643b0)
 ![Untitled-1](https://user-images.githubusercontent.com/78867217/163694361-6d33565a-9178-4ed7-873e-e8def0160166.jpg)
 
 

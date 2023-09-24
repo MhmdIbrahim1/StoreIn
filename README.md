@@ -11,7 +11,7 @@ StoreIn app targets people who are looking to buy high quality furniture product
 - Firebase Auth : Manging Accounts/ Loging in and Registrations.
 - Firebase Firestore : Database for the system.
 - Firebase Storage : To store proucts images and user profile pictures.
-- MVVM & LiveData : Saperate logic code from views and save the state in case the screen configuration changes.
+- MVVM & LiveData & State Flow : Saperate logic code from views and save the state in case the screen configuration changes.
 - Coroutines : do some code in the background.
 - view binding : instead of inflating views manually view binding will take care of that.
 - coil : Catch images and load them in imageView.
